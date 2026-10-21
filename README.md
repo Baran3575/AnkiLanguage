@@ -95,6 +95,8 @@ SQLite dosyası ilk çalıştırmada `data/wort.db` olarak oluşturulur. Demo pr
 
 ## Android APK
 
+Hazır debug APK: **[Releases · wort. v1.0.0](https://github.com/Baran3575/AnkiLanguage/releases/latest)** (`app-debug.apk`, Android 7.0+).
+
 ### GitHub Actions ile (önerilen)
 
 `main` dalına yapılan her push (veya manuel **Run workflow**) APK üretir:
