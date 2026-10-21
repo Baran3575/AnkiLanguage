@@ -1,0 +1,47 @@
+{
+  "name": "wort",
+  "version": "1.0.0",
+  "description": "Türkçe → Almanca A1.1/A1.2 öğrenme uygulaması · FSRS-7R · çevrimdışı Android APK",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently -k -n api,web -c blue,magenta \"node server/index.js\" \"vite --host 0.0.0.0\"",
+    "server": "node server/index.js",
+    "build": "vite build",
+    "start": "node server/index.js",
+    "preview": "vite preview --host 0.0.0.0",
+    "build:android": "VITE_LOCAL_MODE=true vite build",
+    "android:sync": "npm run build:android && cap sync android",
+    "android:apk": "cd android && ./gradlew assembleDebug",
+    "dev:local": "VITE_LOCAL_MODE=true vite --host 0.0.0.0 --port 5174"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Baran3575/AnkiLanguage.git"
+  },
+  "keywords": [],
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Baran3575/AnkiLanguage/issues"
+  },
+  "homepage": "https://github.com/Baran3575/AnkiLanguage#readme",
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
+    "@fontsource-variable/hanken-grotesk": "^5.3.0",
+    "express": "^5.3.0",
+    "framer-motion": "^14.4.0",
+    "lucide-react": "^1.60.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
+    "@vitejs/plugin-react": "^6.1.2",
+    "concurrently": "^10.0.6",
+    "vite": "^8.3.4"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

@@ -1,0 +1,492 @@
+/* ── Progress ─────────────────────────────────────────────────── */
+
+.progress-head {
+  align-items: flex-end;
+  margin-bottom: 22px;
+}
+
+.progress-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  padding-bottom: 4px;
+}
+
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  padding: 17px 5px;
+  border: 1px solid var(--line);
+  border-radius: 21px;
+  background: var(--surface);
+  transition: opacity 180ms ease;
+}
+
+.kpi-strip.is-loading {
+  opacity: 0.62;
+}
+
+.kpi {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  min-width: 0;
+  padding: 0 13px;
+}
+
+.kpi:not(:first-child) {
+  border-left: 1px solid var(--line);
+}
+
+.kpi-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+.kpi-blue .kpi-icon { background: var(--blue-soft); color: var(--blue); }
+.kpi-green .kpi-icon { background: var(--moss-soft); color: var(--moss); }
+.kpi-amber .kpi-icon { background: var(--amber-soft); color: #a06a08; }
+.kpi-coral .kpi-icon { background: var(--coral-soft); color: var(--coral); }
+.kpi-violet .kpi-icon { background: var(--violet-soft); color: var(--violet); }
+
+.kpi > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.kpi-label {
+  color: var(--muted-2);
+  font-size: 8px;
+  font-weight: 680;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.kpi strong {
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 610;
+  letter-spacing: -0.055em;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kpi small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 8.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.progress-main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.42fr) minmax(300px, 0.78fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.progress-secondary-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.progress-tertiary-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* Vocab panel */
+
+.vocab-panel {
+  padding: 22px;
+}
+
+.vocab-panel .panel-head {
+  margin-bottom: 7px;
+}
+
+.vocab-panel .panel-head h2 {
+  font-size: 26px;
+}
+
+.vocab-panel-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 4px;
+}
+
+.vocab-panel-summary > p {
+  max-width: 400px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.vocab-panel-summary > p strong {
+  color: var(--ink-2);
+}
+
+.vocab-panel .chart-legend {
+  flex-shrink: 0;
+}
+
+.vocab-panel .vocab-chart {
+  margin-top: 5px;
+}
+
+.vocab-panel-foot {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  padding-top: 11px;
+  border-top: 1px solid var(--line);
+}
+
+.vocab-panel-foot span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 8.5px;
+}
+
+/* CEFR */
+
+.cefr-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+}
+
+.cefr-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cefr-level {
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.cefr-level.has-progress {
+  border-color: rgba(47, 75, 240, 0.13);
+  background: rgba(47, 75, 240, 0.025);
+}
+
+.cefr-level-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 7px;
+}
+
+.cefr-level-top > div {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cefr-level-top strong {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 620;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.cefr-level-top span {
+  color: var(--muted);
+  font-size: 8.5px;
+}
+
+.cefr-level-top > span {
+  color: var(--ink-2);
+  font-size: 9.5px;
+  font-weight: 680;
+}
+
+.cefr-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 5px;
+  color: var(--muted-2);
+  font-size: 8px;
+}
+
+.cefr-vocab-track {
+  display: flex;
+  width: 100%;
+  height: 4px;
+  margin-top: 6px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: rgba(25, 27, 31, 0.05);
+}
+
+.cefr-vocab-track i {
+  display: block;
+  height: 100%;
+}
+
+.cefr-vocab-track i.mastered { background: var(--moss); }
+.cefr-vocab-track i.review { background: var(--blue); }
+
+.unit-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 5px;
+  margin-top: 14px;
+}
+
+.unit-mini {
+  display: grid;
+  place-items: center;
+  height: 24px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(25, 27, 31, 0.035);
+  color: var(--muted-2);
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.unit-mini.completed {
+  border-color: rgba(38, 122, 89, 0.15);
+  background: var(--moss-soft);
+  color: var(--moss);
+}
+
+.unit-mini.current {
+  border-color: rgba(47, 75, 240, 0.2);
+  background: var(--blue-soft);
+  color: var(--blue-deep);
+}
+
+.cefr-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 13px;
+  border-top: 1px solid var(--line);
+}
+
+.cefr-foot > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted-2);
+  font-size: 8.5px;
+}
+
+/* Retention */
+
+.retention-panel {
+  padding: 22px;
+}
+
+.retention-panel .panel-lede {
+  margin-bottom: 4px;
+  font-size: 10px;
+}
+
+.retention-chart {
+  margin-top: 3px;
+}
+
+.retention-foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 3px;
+  padding-top: 11px;
+  border-top: 1px solid var(--line);
+}
+
+.retention-foot > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted-2);
+  font-size: 8.5px;
+}
+
+.target-dash {
+  display: inline-block;
+  width: 13px;
+  height: 0;
+  border-top: 1px dashed var(--moss);
+}
+
+.retention-foot > span:last-child {
+  margin-left: auto;
+}
+
+/* Accuracy */
+
+.accuracy-panel {
+  padding: 22px;
+}
+
+.accuracy-panel .panel-lede {
+  margin-bottom: 14px;
+  font-size: 10px;
+}
+
+.accuracy-panel .accuracy-bars {
+  gap: 11px;
+}
+
+.accuracy-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  background: rgba(47, 75, 240, 0.04);
+  color: var(--muted);
+  font-size: 8.5px;
+  line-height: 1.45;
+}
+
+.accuracy-note svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--blue);
+}
+
+/* Heatmap */
+
+.heatmap-panel {
+  padding: 22px;
+}
+
+.heatmap-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted-2);
+  font-size: 8.5px;
+}
+
+.heatmap-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.heatmap-stats span:first-child {
+  color: var(--coral);
+  font-weight: 640;
+}
+
+.heatmap-panel .heatmap-wrap {
+  margin-top: 5px;
+}
+
+.heatmap-panel .heatmap {
+  gap: 4px;
+}
+
+.heatmap-panel .heatmap-week {
+  gap: 4px;
+}
+
+.heatmap-panel .heat-cell {
+  border-radius: 3px;
+}
+
+/* Forecast */
+
+.forecast-panel {
+  padding: 22px;
+}
+
+.forecast-panel .forecast-bars {
+  margin: 8px 0 13px;
+}
+
+.forecast-panel-foot {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  padding-top: 11px;
+  border-top: 1px solid var(--line);
+}
+
+.forecast-panel-foot > div {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.forecast-panel-foot > div:nth-child(2) {
+  padding-left: 14px;
+  border-left: 1px solid var(--line);
+}
+
+.forecast-panel-foot span {
+  color: var(--muted-2);
+  font-size: 8px;
+}
+
+.forecast-panel-foot strong {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 610;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.forecast-panel-foot .btn {
+  margin-left: auto;
+  min-height: 33px;
+  padding: 0 12px;
+  font-size: 9.5px;
+}
+
+.progress-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  padding: 0 3px;
+  color: var(--muted-2);
+  font-size: 9px;
+}
+
+.progress-footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}

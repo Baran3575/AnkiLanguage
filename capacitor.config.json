@@ -1,0 +1,15 @@
+{
+  "appId": "com.baran.wort",
+  "appName": "wort",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  },
+  "server": {
+    "androidScheme": "https"
+  },
+  "backgroundColor": "#F3F2EC"
+}

@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# web build
+dist/
+
+# local SQLite data and WAL files
+data/
+
+# Capacitor / Android
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+android/captures/
+*.iml
+*.apk
+*.aab
+*.keystore
+*.jks
+
+# tooling / OS
+.DS_Store
+.env
+.env.*
+coverage/
+*.log
