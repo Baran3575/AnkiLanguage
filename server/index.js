@@ -16,7 +16,6 @@ import {
 import { ALL_LESSONS, LEVELS, UNITS, VOCAB_BY_ID, VOCAB_LIST, UNIT_COLORS } from '../shared/content.js';
 import { publicLesson, buildExercises, unitForLesson } from '../shared/exercises.js';
 import { computeBrain, TYPE_LABELS } from '../shared/brain.js';
-import { buildDemoState } from '../shared/demo.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -270,7 +269,6 @@ function buildDashboard(userId) {
       totalNodes: path.totalNodes,
       progress: path.progress,
     },
-    demo: Boolean(user.profile?.demo),
     generatedAt: new Date().toISOString(),
   };
 }
@@ -419,7 +417,6 @@ function buildProgress(userId, range = 30) {
       streak: user.streak,
       wordsPerActiveDay: activeDays ? Math.round((counts.seen / activeDays) * 10) / 10 : 0,
     },
-    demo: Boolean(user.profile?.demo),
   };
 }
 
@@ -476,63 +473,6 @@ function reviewQueue(userId) {
   };
 }
 
-/* ── Demo seeding ──────────────────────────────────────────────── */
-
-function seedDemo() {
-  if (getUser('demo')) return;
-  const state = buildDemoState(new Date());
-  const insertWord = db.prepare(`
-    INSERT INTO user_words (user_id, vocab_id, state, stability, stability_short, difficulty, reps, lapses, exposures, correct_count, wrong_count, first_seen, last_review, due_at, last_grade)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `);
-  db.exec('BEGIN');
-  try {
-    db.prepare(`
-      INSERT INTO users (id, name, goal_minutes, motivation, level, xp, streak, best_streak, created_at, last_active, profile_json, settings_json)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(
-      state.user.id, state.user.name, state.user.goal_minutes, state.user.motivation, state.user.level,
-      state.user.xp, state.user.streak, state.user.best_streak, state.user.created_at, state.user.last_active,
-      JSON.stringify(state.user.profile), JSON.stringify(state.user.settings)
-    );
-    for (const w of state.words) {
-      insertWord.run('demo', w.vocab_id, w.state, w.stability, w.stability_short ?? w.stabilityShort ?? 0, w.difficulty, w.reps, w.lapses, w.exposures,
-        w.correct_count, w.wrong_count, w.first_seen, w.last_review, w.due_at, w.last_grade);
-    }
-    const insertRev = db.prepare(`
-      INSERT INTO reviews (id, user_id, vocab_id, lesson_id, exercise_type, grade, correct, latency_ms, stability_before, stability_short_before, stability_after, stability_short_after, difficulty_after, predicted_recall, interval_days, reviewed_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `);
-    for (const r of state.reviews) {
-      insertRev.run(r.id, 'demo', r.vocab_id, r.lesson_id, r.exercise_type, r.grade, r.correct, r.latency_ms,
-        r.stability_before, r.stability_short_before, r.stability_after, r.stability_short_after,
-        r.difficulty_after, r.predicted_recall, r.interval_days, r.reviewed_at);
-    }
-    const insertProgress = db.prepare(`
-      INSERT INTO lesson_progress (user_id, lesson_id, completed, best_score, attempts, last_at, completed_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `);
-    for (const p of state.progress) {
-      insertProgress.run('demo', p.lesson_id, p.completed, p.best_score, p.attempts, p.last_at, p.completed_at);
-    }
-    const insertStats = db.prepare(`
-      INSERT INTO daily_stats (user_id, day, minutes, xp, reviews, correct, new_words, learning_words, review_words, mastered_words, accuracy)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `);
-    for (const d of state.dailyStats) {
-      insertStats.run('demo', d.day, d.minutes, d.xp, d.reviews, d.correct, d.new_words, d.learning_words, d.review_words, d.mastered_words, d.accuracy);
-    }
-    db.exec('COMMIT');
-    console.log(`[demo] seeded ${state.words.length} words, ${state.reviews.length} reviews`);
-  } catch (err) {
-    db.exec('ROLLBACK');
-    console.error('[demo] seed failed', err);
-    throw err;
-  }
-}
-
-seedDemo();
-
 /* ── Routes ────────────────────────────────────────────────────── */
 
 app.get('/api/health', (req, res) => {
@@ -582,12 +522,6 @@ app.post('/api/users', (req, res) => {
   res.status(201).json({ user: publicUser(user), bootstrap: { user: publicUser(user), dashboard: buildDashboard(id), path: buildPath(id), brain: loadBrain(user, joinedWords(id), [], [], []) } });
 });
 
-app.post('/api/demo', (req, res) => {
-  seedDemo();
-  const user = getUser('demo');
-  if (!user) return res.status(500).json({ error: 'Demo hazırlanamadı.' });
-  res.json({ user: publicUser(user) });
-});
 
 app.get('/api/users/:id/bootstrap', (req, res) => {
   const user = getUser(req.params.id);

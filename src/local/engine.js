@@ -14,7 +14,6 @@ import {
 } from '../../shared/fsrs.js';
 import { publicLesson, unitForLesson } from '../../shared/exercises.js';
 import { computeBrain, TYPE_LABELS } from '../../shared/brain.js';
-import { buildDemoState } from '../../shared/demo.js';
 
 const STORE_KEY = 'wort.local.v1';
 const DAY = 86_400_000;
@@ -377,7 +376,6 @@ function buildDashboard(s, userId) {
       totalNodes: path.totalNodes,
       progress: path.progress,
     },
-    demo: Boolean(user.profile?.demo),
     generatedAt: new Date().toISOString(),
   };
 }
@@ -526,7 +524,6 @@ function buildProgress(s, userId, range = 30) {
       streak: user.streak || 0,
       wordsPerActiveDay: activeDays ? Math.round((counts.seen / activeDays) * 10) / 10 : 0,
     },
-    demo: Boolean(user.profile?.demo),
   };
 }
 
@@ -584,17 +581,6 @@ function reviewQueueData(s, userId) {
     brain,
     desiredRetention: brain.personalization.desiredRetention,
   };
-}
-
-function seedDemo(s) {
-  if (s.users.demo && Object.keys(s.words.demo || {}).length) return;
-  const state = buildDemoState(new Date());
-  s.users.demo = state.user;
-  s.words.demo = Object.fromEntries(state.words.map((w) => [w.vocab_id, { ...w, user_id: 'demo' }]));
-  s.reviews.demo = state.reviews.map((r) => ({ ...r, user_id: 'demo' }));
-  s.progress.demo = Object.fromEntries(state.progress.map((p) => [p.lesson_id, { ...p, user_id: 'demo' }]));
-  s.daily.demo = Object.fromEntries(state.dailyStats.map((d) => [d.day, { ...d, user_id: 'demo' }]));
-  save(s);
 }
 
 function ensureUser(s, userId) {
@@ -817,13 +803,6 @@ export const localApi = {
         brain: brainFor(s, id, [], [], [], []),
       },
     };
-  },
-
-  async startDemo() {
-    const s = load();
-    seedDemo(s);
-    const user = s.users.demo;
-    return { user: publicUser(user) };
   },
 
   async bootstrap(userId) {

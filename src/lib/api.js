@@ -36,11 +36,6 @@ export const api = {
     return request('/api/users', { method: 'POST', body: JSON.stringify(payload) });
   },
 
-  async startDemo() {
-    if (LOCAL_MODE) return (await getLocalApi()).startDemo();
-    return request('/api/demo', { method: 'POST', body: '{}' });
-  },
-
   async bootstrap(userId) {
     if (LOCAL_MODE) return (await getLocalApi()).bootstrap(userId);
     return request(`/api/users/${encodeURIComponent(userId)}/bootstrap`);

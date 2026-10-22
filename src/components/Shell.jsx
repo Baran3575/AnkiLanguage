@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../lib/store.jsx';
 import { navigate, useRoute } from '../lib/router.js';
-import { Logo, ProgressBar } from './ui.jsx';
+import { ProgressBar } from './ui.jsx';
 import SettingsSheet from './SettingsSheet.jsx';
 import { SPEECH_ERROR_EVENT } from '../lib/speech.js';
 
@@ -26,11 +26,8 @@ function Sidebar({ active, due }) {
   return (
     <aside className="sidebar">
       <div className="sidebar-top">
-        <button className="sidebar-logo" onClick={() => navigate('/today')} aria-label="wort. ana sayfa">
-          <Logo tone="light" />
-          <span className="sidebar-lang">TR <span>→</span> DE</span>
-        </button>
-        <p className="sidebar-tagline">Almanca, beynine göre.</p>
+        <span className="sidebar-lang">TR <span>→</span> DE</span>
+        <span className="sidebar-level-tag">{level}</span>
       </div>
 
       <nav className="sidebar-nav" aria-label="Ana gezinme">
@@ -92,7 +89,7 @@ function Sidebar({ active, due }) {
           <span className="sidebar-avatar">{(user?.name || 'W').slice(0, 1).toLocaleUpperCase('tr-TR')}</span>
           <div>
             <strong>{user?.name || 'Öğrenci'}</strong>
-            <small>{user?.profile?.demo ? 'Demo profil' : 'Kişisel profil'}</small>
+            <small>Profil ve ayarlar</small>
           </div>
           <Settings2 size={17} aria-hidden />
         </button>
@@ -106,9 +103,7 @@ function MobileBar({ active, due }) {
   return (
     <>
       <header className="mobile-topbar">
-        <button type="button" className="mobile-logo" onClick={() => navigate('/today')} aria-label="wort.">
-          <Logo tone="dark" small />
-        </button>
+        <span className="mobile-context">TR <b>→</b> DE <i>A1</i></span>
         <div className="mobile-topbar-actions">
           <button type="button" className="mobile-streak" onClick={() => navigate('/progress')} aria-label={`${user?.streak || 0} günlük seri`}>
             <Flame size={15} /> <strong>{user?.streak || 0}</strong>

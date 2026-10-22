@@ -12,7 +12,7 @@ import { articleParts } from '../lib/format.js';
 import { playCorrect, playIncorrect, playComplete, haptic } from '../lib/sound.js';
 import { speakGerman, stopSpeaking } from '../lib/speech.js';
 import {
-  ArticleDot, AudioButton, Badge, Button, Chip, GermanWord, Keycap, Logo, ProgressBar, Skeleton,
+  ArticleDot, AudioButton, Badge, Button, Chip, GermanWord, Keycap, ProgressBar, Skeleton,
 } from '../components/ui.jsx';
 
 const TYPE_META = {

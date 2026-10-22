@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../lib/store.jsx';
 import { clamp } from '../lib/format.js';
-import { Button, Chip, Logo, ArticleDot, AudioButton } from '../components/ui.jsx';
+import { Button, Chip, ArticleDot, AudioButton } from '../components/ui.jsx';
 import { Brainprint, MetricBars } from '../components/BrainVisual.jsx';
 import { brainprint } from '../../shared/brain.js';
 import { playComplete } from '../lib/sound.js';
@@ -441,11 +441,11 @@ export default function Onboarding({ onBackToWelcome }) {
     <div className="onboarding">
       <aside className="ob-aside">
         <div className="ob-aside-top">
-          <Logo tone="light" />
           <Chip tone="on-blue" icon={Sparkles}>kişisel başlangıç</Chip>
+          <span className="ob-aside-level">A1.1 — A1.2</span>
         </div>
         <div className="ob-aside-copy">
-          <span className="ob-aside-kicker">wort. yöntemi</span>
+          <span className="ob-aside-kicker">Yöntem</span>
           <h1>Önce seni<br />tanıyoruz.</h1>
           <p>
             Herkes aynı yerden başlamaz. 3 dakikalık kısa bir tarama ile
@@ -460,9 +460,6 @@ export default function Onboarding({ onBackToWelcome }) {
         <div className="ob-aside-quote">
           <span>“</span>
           <p>İyi bir plan, doğru zamanda doğru kelimeyi getirir.</p>
-        </div>
-        <div className="ob-aside-orbit" aria-hidden>
-          <i /><i /><i />
         </div>
       </aside>
 

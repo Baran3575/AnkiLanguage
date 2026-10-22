@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { LogOut, RotateCcw, ShieldCheck, Volume2, Sparkles, Brain, SlidersHorizontal, Download } from 'lucide-react';
+import { LogOut, RotateCcw, ShieldCheck, Volume2, Brain, SlidersHorizontal, Download } from 'lucide-react';
 import { useApp } from '../lib/store.jsx';
 import { Button, Sheet, Chip } from './ui.jsx';
 import { ConfidenceRing } from './BrainVisual.jsx';
@@ -110,7 +110,6 @@ export default function SettingsSheet() {
       <div className="settings-meta">
         <Chip tone="blue" icon={Brain}>{brain?.evidence || 0} cevap</Chip>
         <Chip tone="green" icon={ShieldCheck}>{user?.streak || 0} günlük seri</Chip>
-        {user?.profile?.demo ? <Chip tone="amber" icon={Sparkles}>demo profil</Chip> : null}
       </div>
 
       <form className="settings-form" onSubmit={saveBasics}>

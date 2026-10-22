@@ -87,26 +87,6 @@
   gap: 18px;
 }
 
-.welcome-demo-link {
-  padding: 5px 0;
-  border: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  background: none;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 12px;
-  font-weight: 620;
-  transition: color 160ms ease, border-color 160ms ease;
-}
-
-.welcome-demo-link:hover {
-  color: #fff;
-  border-color: var(--lime);
-}
-
-.welcome-demo-link:disabled {
-  opacity: 0.5;
-}
-
 .welcome-main {
   position: relative;
   z-index: 2;

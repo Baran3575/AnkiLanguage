@@ -28,14 +28,14 @@ Uygulama iki modda çalışır:
 
 <p align="center">
   <img src="docs/screenshots/today-mobile.png" width="31%" alt="wort. Bugün ekranı" />
+  <img src="docs/screenshots/path-mobile.png" width="31%" alt="wort. Yol ekranı" />
   <img src="docs/screenshots/review-mobile.png" width="31%" alt="wort. Tekrar ekranı" />
-  <img src="docs/screenshots/brain-mobile.png" width="31%" alt="wort. Beyin ekranı" />
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/lesson-match-mobile.png" width="31%" alt="wort. eşleştirme egzersizi" />
+  <img src="docs/screenshots/progress-mobile.png" width="31%" alt="wort. Gelişim ekranı" />
+  <img src="docs/screenshots/brain-mobile.png" width="31%" alt="wort. Beyin ekranı" />
   <img src="docs/screenshots/welcome-mobile.png" width="31%" alt="wort. karşılama ekranı" />
-  <img src="docs/screenshots/progress-mobile.png" width="31%" alt="wort. gelişim ekranı" />
 </p>
 
 <p align="center">
@@ -47,7 +47,7 @@ Uygulama iki modda çalışır:
 - **FSRS-7 · Recency** · 34 parametreli çift-stabilite modeli; uzun vadeli `stability`, kısa vadeli `stability_short` ve `difficulty` birlikte güncellenir.
 - **Güvenilir Almanca ses** · Android'de yerel `TextToSpeech` motoru, Google Almanca ses paketleri arasında deterministik kalite sıralaması ve web için `speechSynthesis` yedeği.
 - **Edge-to-edge Android** · Android 17 / API 37 hedefi, Android 9 / API 28 desteği, `EdgeToEdge.enable()` ve `SystemBars` CSS güvenli alanları.
-- **Yeni görsel sistem** · Instrument Sans + Instrument Serif; yalnızca mavi, siyah, beyaz ve gri tonları.
+- **Yeni görsel sistem** · Inter Variable ile düz, kalın ve yoğun bir çalışma masası düzeni; logosuz başlıklar, keskin çizgiler ve yalnızca mavi, siyah, beyaz ve gri tonları.
 - **Doğrulanmış A1 içeriği** · 12 ünite, 48 blok, 224 kelime; dil bilgisi notları ve örnek cümleler gözden geçirildi.
 
 ## Özellikler
@@ -59,7 +59,7 @@ Uygulama iki modda çalışır:
 - **Tekrar** · FSRS-7 destesi, gecikmiş kelimeler, yaklaşan yük grafiği ve dört dereceli değerlendirme.
 - **Gelişim + Beyin** · kelime edinimi, doğruluk, seri, ısı haritası, öğrenme profili ve kişiselleştirme.
 - **Çevrimdışı kalıcılık** · API modunda SQLite; mobil modda `wort.local.v1` anahtarında yerel durum.
-- **Demo profili** · 21 günlük geçmiş, 70 görülmüş kelime ve hazır bir öğrenme profiliyle denenebilir.
+- **Kompakt akış** · Bugün ve Tekrar tek ekrana yakın; Yol ekranında yalnızca güncel ünite açık başlar, diğer üniteler katlanır.
 
 ## FSRS-7 · Recency
 
@@ -135,7 +135,7 @@ API sunucusunu ayrı çalıştırmak için:
 npm run server
 ```
 
-SQLite dosyası ilk çalıştırmada `data/wort.db` olarak oluşturulur. Demo profilini sıfırlamak için **Ayarlar → İlerlemeyi sıfırla** akışını kullanabilirsiniz.
+SQLite dosyası ilk çalıştırmada `data/wort.db` olarak oluşturulur. İlerlemeyi sıfırlamak için **Ayarlar → İlerlemeyi sıfırla** akışını kullanabilirsiniz.
 
 ## Android APK
 
@@ -179,7 +179,6 @@ APK: `android/app/build/outputs/apk/debug/app-debug.apk`
 - Mobil modda hiçbir veri cihazdan çıkmaz; hesap, reklam veya analitik yoktur.
 - Web/API modunda veriler yalnızca yerel SQLite dosyasında tutulur.
 - FSRS-7 tamamen cihaz üzerinde hesaplanır.
-- Demo profili gerçek bir kullanıcı verisi içermez.
 
 ## Lisans
 

@@ -30,7 +30,7 @@ function ReviewHero({ data, onStart }) {
   const due = data?.dueCount || 0;
   const words = data?.queue?.slice(0, 3) || [];
   return (
-    <section className="review-hero">
+    <section className={`review-hero ${due > 0 ? '' : 'is-empty'}`}>
       <div className="review-hero-copy">
         <Chip tone="on-dark" icon={Layers3}>{due > 0 ? 'Bugünün destesi' : 'Bugünlük temiz'}</Chip>
         <h1>{due > 0 ? `${due} kelime, tam doğru zamanda.` : 'Bugünlük tekrar yok.'}</h1>
@@ -202,6 +202,7 @@ export function Review() {
 
   if (!data) return null;
   const due = data.dueCount || 0;
+  const hasQueue = (data.queue?.length || 0) > 0;
 
   return (
     <div className="page review-page">
@@ -220,21 +221,13 @@ export function Review() {
 
       <ReviewHero data={data} onStart={() => navigate('/review/session')} />
 
-      <div className="review-columns">
-        <DueList queue={data.queue || []} />
+      <div className={`review-columns ${hasQueue ? '' : 'is-empty'}`}>
+        {hasQueue ? <DueList queue={data.queue || []} /> : null}
         <div className="review-side">
           <UpcomingPanel upcoming={data.upcoming} retention={data.desiredRetention || data.brain?.personalization?.desiredRetention || 0.93} />
           <WhyPanel brain={data.brain} />
         </div>
       </div>
-
-      {due === 0 ? (
-        <div className="review-empty-strip">
-          <span><Check size={18} /></span>
-          <p><strong>Bugünün destesi temiz.</strong> Yeni kelimeler ekleyerek yarının dalgasını büyütebilirsin.</p>
-          <Button size="sm" variant="dark" onClick={() => navigate('/path')}>Yeni blok</Button>
-        </div>
-      ) : null}
     </div>
   );
 }

@@ -10,7 +10,6 @@ import Lesson from './screens/Lesson.jsx';
 import { Review, ReviewSession } from './screens/Review.jsx';
 import Progress from './screens/Progress.jsx';
 import Brain from './screens/Brain.jsx';
-import { Logo } from './components/ui.jsx';
 
 const TITLES = {
   today: 'Bugün',
@@ -25,11 +24,10 @@ const TITLES = {
 function BootSplash() {
   return (
     <div className="boot-splash">
-      <div className="boot-logo"><Logo tone="dark" /></div>
       <div className="boot-scan">
         {Array.from({ length: 18 }, (_, i) => <i key={i} style={{ animationDelay: `${i * 45}ms` }} />)}
       </div>
-      <p>Beyin profilin hazırlanıyor…</p>
+      <p>Dersin hazırlanıyor…</p>
     </div>
   );
 }

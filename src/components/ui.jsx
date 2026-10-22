@@ -6,14 +6,6 @@ import {
 import { genderTone, articleParts } from '../lib/format.js';
 import { speakGerman, stopSpeaking } from '../lib/speech.js';
 
-export function Logo({ tone = 'dark', small = false, className = '' }) {
-  return (
-    <span className={`logo logo-${tone} ${small ? 'logo-sm' : ''} ${className}`} aria-label="wort.">
-      wort<span className="logo-dot">.</span>
-    </span>
-  );
-}
-
 export const Button = forwardRef(function Button({
   children, variant = 'primary', size = 'md', className = '', icon: Icon, trailing: Trailing,
   loading = false, full = false, as: As = 'button', ...props

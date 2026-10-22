@@ -35,8 +35,8 @@
   --radius-sm: 11px;
   --shadow-float: 0 24px 56px -28px rgba(11, 17, 24, 0.34);
   --shadow-soft: 0 14px 34px -26px rgba(11, 17, 24, 0.26);
-  --font-ui: 'Instrument Sans Variable', 'Instrument Sans', system-ui, -apple-system, sans-serif;
-  --font-display: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  --font-ui: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   /* SystemBars injects --safe-area-inset-* on Android. env() is the
      fallback for iOS and newer Android WebViews. */
@@ -177,8 +177,8 @@ h2,
 h3,
 .display {
   font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: -0.028em;
+  font-weight: 760;
+  letter-spacing: -0.035em;
 }
 
 .page {

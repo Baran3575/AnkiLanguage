@@ -60,7 +60,7 @@ function VocabPanel({ data }) {
           { label: 'Ustalık', color: '#0b1118' },
         ]} />
       </div>
-      <VocabChart series={series} height={250} />
+      <VocabChart series={series} height={160} />
       <div className="vocab-panel-foot">
         <span><i className="dot learning" /> {data.vocab.learning} öğrenme</span>
         <span><i className="dot review" /> {data.vocab.review} tekrar</span>
@@ -138,7 +138,7 @@ function RetentionPanel({ data }) {
         Son 8 haftanın doğruluğu. Hedef %{Math.round(data.brain.personalization.desiredRetention * 100)};
         çizgi hedefin altına indiğinde tekrarlar sıklaşır.
       </p>
-      <RetentionLine weeks={data.weeks} height={190} />
+      <RetentionLine weeks={data.weeks} height={140} />
       <div className="retention-foot">
         <span><i className="dot mastered" /> haftalık hatırlama</span>
         <span><i className="target-dash" /> hedef %90</span>
@@ -197,7 +197,7 @@ function ForecastPanel({ data }) {
         </div>
         <CalendarDays size={18} />
       </div>
-      <ForecastBars data={data.forecast} height={148} />
+      <ForecastBars data={data.forecast} height={110} />
       <div className="forecast-panel-foot">
         <div>
           <span>Bugün</span>

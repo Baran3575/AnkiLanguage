@@ -43,7 +43,8 @@ export function AppProvider({ children }) {
 
   useEffect(() => {
     const id = localStorage.getItem(USER_KEY);
-    if (!id) {
+    if (!id || id === 'demo') {
+      if (id === 'demo') localStorage.removeItem(USER_KEY);
       setLoading(false);
       return;
     }
@@ -57,18 +58,6 @@ export function AppProvider({ children }) {
     await load(id);
     navigate('/today');
     if (message) showToast(message);
-  }, [load, showToast]);
-
-  const startDemo = useCallback(async () => {
-    setLoading(true);
-    try {
-      const data = await api.startDemo();
-      await load(data.user.id);
-      navigate('/today');
-      showToast('Demo profil yüklendi. Elif’in 3 haftalık yolculuğu hazır.', 'success');
-    } finally {
-      setLoading(false);
-    }
   }, [load, showToast]);
 
   const createAccount = useCallback(async (payload) => {
@@ -126,7 +115,6 @@ export function AppProvider({ children }) {
     settingsOpen,
     setSettingsOpen,
     signIn,
-    startDemo,
     createAccount,
     refresh,
     logout,

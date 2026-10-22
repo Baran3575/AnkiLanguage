@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  ArrowRight, Check, ChevronRight, Lock, Map, Play, Sparkles, Star, Timer,
+  ArrowRight, Check, ChevronDown, ChevronRight, Lock, Map, Play, Sparkles, Star, Timer,
 } from 'lucide-react';
 import { useApp } from '../lib/store.jsx';
 import { navigate } from '../lib/router.js';
@@ -59,11 +59,12 @@ function PathNode({ lesson, index, unit, onOpen }) {
   );
 }
 
-function UnitSection({ unit, onOpen }) {
+function UnitSection({ unit, onOpen, expanded, onToggle }) {
   const Icon = unit.status === 'locked' ? Lock : unit.status === 'completed' ? Check : Map;
+  const panelId = `unit-panel-${unit.id}`;
   return (
     <motion.section
-      className={`unit-section unit-${unit.color} status-${unit.status}`}
+      className={`unit-section unit-${unit.color} status-${unit.status} ${expanded ? 'is-expanded' : 'is-collapsed'}`}
       style={{
         '--unit-color': unit.colorMain || 'var(--blue)',
         '--unit-soft': unit.colorSoft || 'var(--blue-soft)',
@@ -73,7 +74,6 @@ function UnitSection({ unit, onOpen }) {
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
     >
-      <span className="unit-watermark" aria-hidden>{unit.code || `U${unit.number}`}</span>
       <header className="unit-header">
         <div className="unit-badge">
           <span>{unit.code || `U${unit.number}`}</span>
@@ -90,17 +90,36 @@ function UnitSection({ unit, onOpen }) {
           <p>{unit.subtitle} · <span>{unit.canDo}</span></p>
         </div>
         <div className="unit-progress">
-          <strong>{unit.completedCount}<span>/{unit.totalCount}</span></strong>
+          <div className="unit-progress-top">
+            <strong>{unit.completedCount}<span>/{unit.totalCount}</span></strong>
+            <button
+              type="button"
+              className="unit-toggle"
+              onClick={onToggle}
+              aria-expanded={expanded}
+              aria-controls={panelId}
+            >
+              {expanded ? 'Kapat' : 'Aç'}
+              <ChevronDown size={13} aria-hidden />
+            </button>
+          </div>
           <ProgressBar value={unit.progress * 100} tone="blue" height={7} label={`${unit.title} ilerlemesi`} />
         </div>
       </header>
 
-      <div className="path-map">
-        <div className="path-rail" aria-hidden />
-        {unit.lessons.map((lesson, i) => (
-          <PathNode key={lesson.id} lesson={lesson} index={i} unit={unit} onOpen={onOpen} />
-        ))}
-      </div>
+      {expanded ? (
+        <div className="path-map" id={panelId}>
+          <div className="path-rail" aria-hidden />
+          {unit.lessons.map((lesson, i) => (
+            <PathNode key={lesson.id} lesson={lesson} index={i} unit={unit} onOpen={onOpen} />
+          ))}
+        </div>
+      ) : (
+        <div className="unit-collapsed-meta" id={panelId}>
+          <span>{unit.lessons.filter((l) => l.status === 'completed').length}/{unit.lessons.length} blok tamam</span>
+          <span>{unit.lessons.find((l) => l.status === 'current')?.title || (unit.status === 'locked' ? 'Checkpoint ile açılır' : 'Tüm bloklar tamam')}</span>
+        </div>
+      )}
     </motion.section>
   );
 }
@@ -109,6 +128,7 @@ export default function Path() {
   const { path, user, dashboard, showToast } = useApp();
   const [level, setLevel] = useState(dashboard?.stats?.level || 'A1.1');
   const [hydrating, setHydrating] = useState(false);
+  const [expandedUnits, setExpandedUnits] = useState(() => new Set());
 
   useEffect(() => {
     if (dashboard?.stats?.level) setLevel(dashboard.stats.level);
@@ -117,6 +137,20 @@ export default function Path() {
   const levelInfo = path?.levels?.find((l) => l.id === level);
   const units = useMemo(() => (path?.units || []).filter((u) => u.level === level), [path, level]);
   const currentUnit = units.find((u) => u.status === 'current');
+
+  useEffect(() => {
+    const focus = units.find((u) => u.status === 'current') || units[0];
+    if (focus) setExpandedUnits(new Set([focus.id]));
+  }, [level, units.length]);
+
+  function toggleUnit(unitId) {
+    setExpandedUnits((prev) => {
+      const next = new Set(prev);
+      if (next.has(unitId)) next.delete(unitId);
+      else next.add(unitId);
+      return next;
+    });
+  }
 
   if (!path) {
     return (
@@ -211,7 +245,12 @@ export default function Path() {
       <div className="units">
         {units.map((unit) => (
           <div id={`unit-${unit.id}`} key={unit.id}>
-            <UnitSection unit={unit} onOpen={openLesson} />
+            <UnitSection
+              unit={unit}
+              onOpen={openLesson}
+              expanded={expandedUnits.has(unit.id)}
+              onToggle={() => toggleUnit(unit.id)}
+            />
           </div>
         ))}
       </div>
