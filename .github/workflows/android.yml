@@ -57,7 +57,7 @@ jobs:
           SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -path '*/bin/sdkmanager' -type f | sort -V | tail -n 1)"
           test -n "$SDKMANAGER"
           yes | "$SDKMANAGER" --licenses > /dev/null || true
-          "$SDKMANAGER" --install "platforms;android-37" "build-tools;37.0.0" "platform-tools"
+          "$SDKMANAGER" --install "platforms;android-37.0" "build-tools;36.0.0" "build-tools;37.0.0" "platform-tools"
 
       - name: Set up Gradle cache
         uses: gradle/actions/setup-gradle@v6
