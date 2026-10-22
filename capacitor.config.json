@@ -11,5 +11,11 @@
   "server": {
     "androidScheme": "https"
   },
-  "backgroundColor": "#F3F2EC"
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "css",
+      "initialViewportFitValueHint": "cover"
+    }
+  },
+  "backgroundColor": "#F4F6F9"
 }

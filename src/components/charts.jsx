@@ -1,12 +1,12 @@
 import { useMemo, useRef, useState } from 'react';
 
 const COLORS = {
-  learning: '#EAAF32',
-  review: '#2F4BF0',
-  mastered: '#257A5A',
-  blue: '#2F4BF0',
-  coral: '#F15B3D',
-  lime: '#C7E84E',
+  learning: '#8a96a5',
+  review: '#1a56db',
+  mastered: '#0b1118',
+  blue: '#1a56db',
+  coral: '#0b1118',
+  lime: '#8fb4ff',
 };
 
 function niceMax(value) {

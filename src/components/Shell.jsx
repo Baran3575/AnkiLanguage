@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   Home, Route, Layers3, ChartSpline, BrainCircuit, Settings2, Flame, ChevronRight, X, CheckCircle2, AlertCircle,
@@ -6,6 +7,7 @@ import { useApp } from '../lib/store.jsx';
 import { navigate, useRoute } from '../lib/router.js';
 import { Logo, ProgressBar } from './ui.jsx';
 import SettingsSheet from './SettingsSheet.jsx';
+import { SPEECH_ERROR_EVENT } from '../lib/speech.js';
 
 const NAV = [
   { id: 'today', label: 'Bugün', href: '/today', icon: Home },
@@ -148,9 +150,9 @@ export function Toast() {
       {toast ? (
         <motion.div
           className={`toast toast-${toast.tone || 'default'}`}
-          initial={{ opacity: 0, y: 16, scale: 0.97 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 10, scale: 0.98 }}
+          initial={{ opacity: 0, y: 16, scale: 0.97, x: '-50%' }}
+          animate={{ opacity: 1, y: 0, scale: 1, x: '-50%' }}
+          exit={{ opacity: 0, y: 10, scale: 0.98, x: '-50%' }}
           transition={{ type: 'spring', stiffness: 420, damping: 30 }}
           role="status"
           aria-live="polite"
@@ -166,9 +168,18 @@ export function Toast() {
 
 export default function Shell({ children }) {
   const route = useRoute();
-  const { dashboard } = useApp();
+  const { dashboard, showToast } = useApp();
   const active = route.name === 'review-session' ? 'review' : route.name;
   const due = dashboard?.plan?.dueReviews || dashboard?.vocab?.due || 0;
+
+  useEffect(() => {
+    function onSpeechError(event) {
+      const message = event?.detail?.message || 'Almanca ses oynatılamadı.';
+      showToast(`${message} Ayarlar → Almanca ses bölümünden ses paketini kontrol edebilirsin.`, 'error');
+    }
+    window.addEventListener(SPEECH_ERROR_EVENT, onSpeechError);
+    return () => window.removeEventListener(SPEECH_ERROR_EVENT, onSpeechError);
+  }, [showToast]);
 
   return (
     <div className="app-shell">

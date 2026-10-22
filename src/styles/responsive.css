@@ -84,7 +84,7 @@
 
   .app-main {
     margin-left: 0;
-    padding: 4px 22px calc(104px + env(safe-area-inset-bottom, 0px));
+    padding: 4px 22px calc(104px + var(--safe-bottom));
   }
 
   .page {
@@ -99,8 +99,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: calc(10px + env(safe-area-inset-top, 0px)) 20px 8px;
-    background: rgba(242, 240, 234, 0.88);
+    padding: calc(10px + var(--safe-top)) 20px 8px;
+    background: rgba(244, 246, 249, 0.9);
     backdrop-filter: blur(15px);
   }
 
@@ -155,7 +155,7 @@
   .bottom-nav {
     position: fixed;
     right: 10px;
-    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(10px + var(--safe-bottom));
     left: 10px;
     z-index: 75;
     display: flex;
@@ -209,7 +209,7 @@
     min-width: 15px;
     height: 15px;
     padding: 0 3px;
-    border: 2px solid #15171c;
+    border: 2px solid #080d13;
     border-radius: 99px;
     background: var(--coral);
     color: #fff;
@@ -910,7 +910,7 @@
   }
 
   .lesson-frame {
-    min-height: calc(100dvh - 34px);
+    min-height: 0;
   }
 
   .lesson-topbar {
@@ -1055,7 +1055,7 @@
   }
 
   .review-session-frame {
-    min-height: calc(100dvh - 27px);
+    min-height: 0;
   }
 
   .review-session-body {

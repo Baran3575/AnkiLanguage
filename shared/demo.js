@@ -100,6 +100,7 @@ export function buildDemoState(now = new Date()) {
       recentReviews: recent.reviews,
       backlog: [...words.values()].filter((w) => w.due_at && new Date(w.due_at) <= at).length,
       capacity: 24,
+      lapseRate: recent.lapseRate ?? 0,
     });
     const next = reviewWord(word, grade, at, context);
     const correct = grade > 1;
@@ -126,8 +127,11 @@ export function buildDemoState(now = new Date()) {
       correct: correct ? 1 : 0,
       latency_ms: latency,
       stability_before: word.stability,
+      stability_short_before: word.stabilityShort ?? word.stability_short ?? 0,
       stability_after: next.stability,
+      stability_short_after: next.stabilityShort,
       difficulty_after: next.difficulty,
+      predicted_recall: next.recallBefore,
       interval_days: next.intervalDays,
       reviewed_at: at.toISOString(),
     });

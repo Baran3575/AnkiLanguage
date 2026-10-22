@@ -73,7 +73,7 @@ const V = [
   ['fruehstuecken', 'frühstücken', 'kahvaltı yapmak', 'fiil', null, null, 'Ich frühstücke um acht Uhr.', 'Saat sekizde kahvaltı yapıyorum.'],
   ['duschen', 'duschen', 'duş almak', 'fiil', null, null, 'Ich dusche jeden Morgen.', 'Her sabah duş alıyorum.'],
   ['anziehen', 'anziehen', 'giyinmek', 'fiil', null, null, 'Ich ziehe meine Jacke an.', 'Ceketimi giyiyorum.', 'Ayrılabilen fiil: an + ziehen'],
-  ['schlafen', 'schlafen', 'uyumak', 'fiil', null, null, 'Ich schlafe um elf Uhr.', 'Saat on birde uyuyorum.'],
+  ['schlafen', 'schlafen', 'uyumak', 'fiil', null, null, 'Ich gehe um elf Uhr schlafen.', 'Saat on birde uyuyorum.'],
   ['fernsehen', 'fernsehen', 'televizyon izlemek', 'fiil', null, null, 'Abends sehe ich fern.', 'Akşamları televizyon izliyorum.', 'Ayrılabilen fiil: fern + sehen'],
   ['morgen_tageszeit', 'der Morgen', 'sabah', 'isim', 'der', 'die Morgen', 'Am Morgen trinke ich Kaffee.', 'Sabah kahve içiyorum.'],
   ['mittag', 'der Mittag', 'öğle', 'isim', 'der', 'die Mittage', 'Am Mittag esse ich in der Kantine.', 'Öğlen kantinde yemek yiyorum.'],
@@ -102,7 +102,7 @@ const V = [
   ['kuchen', 'der Kuchen', 'kek', 'isim', 'der', 'die Kuchen', 'Der Kuchen ist sehr lecker.', 'Kek çok lezzetli.'],
   ['fruehstueck', 'das Frühstück', 'kahvaltı', 'isim', 'das', 'die Frühstücke', 'Das Frühstück ist um acht Uhr.', 'Kahvaltı saat sekizde.'],
   ['mittagessen', 'das Mittagessen', 'öğle yemeği', 'isim', 'das', 'die Mittagessen', 'Das Mittagessen ist fertig.', 'Öğle yemeği hazır.'],
-  ['abendessen', 'das Abendessen', 'akşam yemeği', 'isim', 'das', 'die Abendessen', 'Wir essen Abendessen um sieben.', 'Akşam yemeğini yedide yiyoruz.'],
+  ['abendessen', 'das Abendessen', 'akşam yemeği', 'isim', 'das', 'die Abendessen', 'Wir essen um sieben zu Abend.', 'Akşam yemeğini yedide yiyoruz.'],
   ['restaurant', 'das Restaurant', 'restoran', 'isim', 'das', 'die Restaurants', 'Das Restaurant ist neben dem Bahnhof.', 'Restoran istasyonun yanında.'],
   ['speisekarte', 'die Speisekarte', 'menü', 'isim', 'die', 'die Speisekarten', 'Die Speisekarte, bitte.', 'Menü, lütfen.'],
   ['bestellen', 'bestellen', 'sipariş vermek', 'fiil', null, null, 'Ich möchte eine Suppe bestellen.', 'Bir çorba sipariş etmek istiyorum.'],
@@ -132,7 +132,7 @@ const V = [
 
   // ── Unit 7 · Zuhause ────────────────────────────────────────────
   ['haus', 'das Haus', 'ev', 'isim', 'das', 'die Häuser', 'Wir haben ein Haus mit Garten.', 'Bahçeli bir evimiz var.'],
-  ['wohnung', 'die Wohnung', 'daire', 'isim', 'die', 'die Wohnungen', 'Die Wohnung ist klein aber schön.', 'Daire küçük ama güzel.'],
+  ['wohnung', 'die Wohnung', 'daire', 'isim', 'die', 'die Wohnungen', 'Die Wohnung ist klein, aber schön.', 'Daire küçük ama güzel.'],
   ['zimmer', 'das Zimmer', 'oda', 'isim', 'das', 'die Zimmer', 'Das Zimmer ist sehr hell.', 'Oda çok aydınlık.'],
   ['kueche', 'die Küche', 'mutfak', 'isim', 'die', 'die Küchen', 'Die Küche ist neben dem Bad.', 'Mutfak banyonun yanında.'],
   ['bad', 'das Bad', 'banyo', 'isim', 'das', 'die Bäder', 'Das Bad hat ein Fenster.', 'Banyoda bir pencere var.'],
@@ -246,12 +246,12 @@ const V = [
   ['planen', 'planen', 'planlamak', 'fiil', null, null, 'Ich plane eine Reise.', 'Bir gezi planlıyorum.'],
   ['besuchen', 'besuchen', 'ziyaret etmek', 'fiil', null, null, 'Ich besuche meine Familie.', 'Ailemi ziyaret ediyorum.'],
   ['bleiben', 'bleiben', 'kalmak', 'fiil', null, null, 'Wir bleiben drei Tage in Wien.', 'Viyana’da üç gün kalıyoruz.'],
-  ['gemacht', 'gemacht', 'yaptım (yapmak)', 'fiil', null, null, 'Ich habe meine Hausaufgabe gemacht.', 'Ev ödevimi yaptım.', 'Perfekt: haben + gemacht'],
-  ['gesehen', 'gesehen', 'gördüm (görmek)', 'fiil', null, null, 'Ich habe Berlin gesehen.', 'Berlin’i gördüm.', 'Perfekt: haben + gesehen'],
-  ['gegessen', 'gegessen', 'yedim (yemek)', 'fiil', null, null, 'Wir haben Döner gegessen.', 'Döner yedik.', 'Perfekt: haben + gegessen'],
-  ['getrunken', 'getrunken', 'içtim (içmek)', 'fiil', null, null, 'Ich habe Tee getrunken.', 'Çay içtim.', 'Perfekt: haben + getrunken'],
-  ['gefahren', 'gefahren', 'gittim (gitmek)', 'fiil', null, null, 'Wir sind nach Berlin gefahren.', 'Berlin’e gittik.', 'Perfekt: sein + gefahren'],
-  ['gewesen', 'gewesen', 'bulundum (olmak)', 'fiil', null, null, 'Ich bin in Wien gewesen.', 'Viyana’da bulundum.', 'Perfekt: sein + gewesen'],
+  ['gemacht', 'gemacht', 'yaptım (yapmak)', 'fiil', null, null, 'Ich habe meine Hausaufgabe gemacht.', 'Ev ödevimi yaptım.', 'Partizip II: machen → gemacht · haben + gemacht'],
+  ['gesehen', 'gesehen', 'gördüm (görmek)', 'fiil', null, null, 'Ich habe Berlin gesehen.', 'Berlin’i gördüm.', 'Partizip II: sehen → gesehen · haben + gesehen'],
+  ['gegessen', 'gegessen', 'yedim (yemek)', 'fiil', null, null, 'Wir haben Döner gegessen.', 'Döner yedik.', 'Partizip II: essen → gegessen · haben + gegessen'],
+  ['getrunken', 'getrunken', 'içtim (içmek)', 'fiil', null, null, 'Ich habe Tee getrunken.', 'Çay içtim.', 'Partizip II: trinken → getrunken · haben + getrunken'],
+  ['gefahren', 'gefahren', 'gittim (gitmek)', 'fiil', null, null, 'Wir sind nach Berlin gefahren.', 'Berlin’e gittik.', 'Partizip II: fahren → gefahren · sein + gefahren'],
+  ['gewesen', 'gewesen', 'bulundum (olmak)', 'fiil', null, null, 'Ich bin in Wien gewesen.', 'Viyana’da bulundum.', 'Partizip II: sein → gewesen · sein + gewesen'],
 ];
 
 export const VOCAB_LIST = V.map(([id, de, tr, pos, gender, plural, example, exampleTr, note]) => ({
@@ -273,7 +273,7 @@ export const UNITS = [
     canDo: 'Kendini tanıt, selamlaş ve nereden geldiğini söyle.',
     lessons: [
       L('u1l1', 'Merhaba!', 'İlk kelimelerin ve adını söylemek', 'Kelime', ['hallo', 'guten_morgen', 'guten_tag', 'guten_abend', 'tschuess', 'ich_bin', 'ich_heisse'],
-        'ich bin / ich heiße', 'Kendini tanıtırken “Ich bin …” (ben …-im) ya da “Ich heiße …” (benim adım …) kullanırsın. “heißen” fiili düzensizdir: ich heiße, du heißt, er/sie heißt. Resmî ortamda “Sie” ile konuşursan “Wie heißen Sie?” dersin.',
+        'ich bin / ich heiße', 'Kendini tanıtırken “Ich bin …” (ben …-im) ya da “Ich heiße …” (benim adım …) kullanırsın. “heißen” çekimi: ich heiße, du heißt, er/sie heißt. Resmî ortamda “Sie” ile konuşursan “Wie heißen Sie?” dersin.',
         ['Ich bin Elif. · Ben Elif.', 'Ich heiße Elif. · Benim adım Elif.', 'Wie heißen Sie? · Adınız ne?'], 6),
       L('u1l2', 'Nereden geliyorsun?', 'Ülkeler, şehirler ve köken', 'Kelime', ['wie_heisst_du', 'woher', 'kommen', 'tuerkei', 'deutschland', 'oesterreich', 'wohnen'],
         'W-soruları ve “kommen”', 'Soru kelimesi başta, fiil ikinci sırada: “Woher kommst du?” Fiil çekimi: ich komme, du kommst, er/sie kommt, wir kommen. Ülke adlarının çoğu artikelsizdir; “die Türkei” istisnadır ve “aus der Türkei” olur.',
@@ -289,10 +289,10 @@ export const UNITS = [
     canDo: 'Sayıları tanı, yaş-fiyat-saat gibi bilgileri anla ve renkleri kullan.',
     lessons: [
       L('u2l1', 'Bir, iki, üç', '0–6 arası sayılar', 'Kelime', ['null', 'eins', 'zwei', 'drei', 'vier', 'fuenf', 'sechs'],
-        'Sayılar ve çoğul', 'Almancada isimler çoğul olurken genellikle -e, -er, -n veya -s eklerinden birini alır: der Tisch → die Tische, das Kind → die Kinder. Sayıdan sonra isim daima çoğuldur: “zwei Katzen”.',
+        'Sayılar ve çoğul', 'Almancada isimler çoğul olurken genellikle -e, -er, -en/-n veya -s eklerinden birini alır: der Tisch → die Tische, das Kind → die Kinder. 1’den büyük sayılardan sonra isim çoğuldur: “zwei Katzen”.',
         ['Ich habe zwei Katzen. · İki kedim var.', 'Wir sind drei Personen. · Biz üç kişiyiz.', 'Der Kurs beginnt um sechs Uhr. · Kurs altıda başlıyor.'], 6),
       L('u2l2', 'Yedi, sekiz, dokuz', '7–12 ve sayı mantığı', 'Kelime', ['sieben', 'acht', 'neun', 'zehn', 'elf', 'zwoelf'],
-        '13–100 arası sayılar', '13–19 için sayı + “zehn”: dreizehn, vierzehn. Onluklar “-zig” ile biter: zwanzig, dreißig, vierzig. 21 gibi sayılar ters söylenir: einundzwanzig (bir ve yirmi).',
+        '13–100 arası sayılar', '13–19 için çoğunlukla sayı + “zehn”: dreizehn, vierzehn; 16 sechzehn ve 17 siebzehn istisnadır. Onluklar “-zig” ile biter: zwanzig, dreißig, vierzig. 21 gibi sayılar ters söylenir: einundzwanzig (bir ve yirmi).',
         ['Eine Woche hat sieben Tage. · Bir haftada yedi gün var.', 'Es ist elf Uhr. · Saat on bir.', 'Das Jahr hat zwölf Monate. · Bir yılda on iki ay var.'], 6),
       L('u2l3', 'Rengarenk', 'Renkler ve betimleme', 'Kelime', ['rot', 'blau', 'gruen', 'gelb', 'schwarz', 'weiss'],
         'Renkler ve “sein”', 'Renkler “sein” fiilinden sonra değişmez: “Der Apfel ist rot.” İsmin önüne gelirse sıfat ek alır: “ein roter Apfel”. A1’de önce “ist + renk” kalıbını sağlamlaştır.',
@@ -353,7 +353,7 @@ export const UNITS = [
     canDo: 'Şehirde yer sor, yol tarifini anla ve toplu taşımayı kullan.',
     lessons: [
       L('u6l1', 'Şehirde', 'Yerler ve “Wo ist…?”', 'Kelime', ['stadt', 'bahnhof', 'supermarkt', 'apotheke', 'krankenhaus', 'schule'],
-        '“Wo ist …?” ve yer belirtme', 'Yer sorarken “Wo ist der Bahnhof?” dersin. Yer belirtirken “in + Dativ”: in der Stadt, in dem (= im) Supermarkt. Eril ve nötr “dem”, dişil “der” olur.',
+        '“Wo ist …?” ve yer belirtme', 'Yer sorarken “Wo ist der Bahnhof?” dersin. Yer belirtirken “in + Dativ”: in der Stadt, in dem (= im) Supermarkt. Eril ve nötr “dem”, dişil “der” olur; çoğulda “den”.',
         ['Wo ist der Bahnhof? · Tren istasyonu nerede?', 'Der Bahnhof ist in der Stadtmitte. · Tren istasyonu şehir merkezinde.', 'Die Apotheke ist rechts. · Eczane sağda.'], 7),
       L('u6l2', 'Yola çıkıyoruz', 'Ulaşım araçları ve bilet', 'Kelime', ['bus', 'u_bahn', 'zug', 'fahrrad', 'zu_fuss', 'fahrkarte'],
         '“mit + Dativ” ile ulaşım', 'Bir araçla gitmek için “mit + Dativ”: mit dem Bus, mit der U-Bahn, mit dem Fahrrad. Yürüyerek gitmek: zu Fuß. “Ich fahre” araç için, “Ich gehe” yürümek için kullanılır.',
@@ -370,9 +370,9 @@ export const UNITS = [
     lessons: [
       L('u7l1', 'Evim', 'Odalar ve “es gibt”', 'Kelime', ['haus', 'wohnung', 'zimmer', 'kueche', 'bad', 'schlafzimmer'],
         '“es gibt” + Akkusativ', 'Bir şeyin varlığını söylemek için “es gibt” kullanılır: Es gibt eine Küche. (Bir mutfak var.) Olumsuzu: Es gibt keine Küche. İsim Akkusativ’dedir.',
-        ['Die Wohnung ist klein aber schön. · Daire küçük ama güzel.', 'Es gibt eine Küche und ein Bad. · Bir mutfak ve bir banyo var.', 'Im Schlafzimmer steht ein Bett. · Yatak odasında bir yatak var.'], 7),
+        ['Die Wohnung ist klein, aber schön. · Daire küçük ama güzel.', 'Es gibt eine Küche und ein Bad. · Bir mutfak ve bir banyo var.', 'Im Schlafzimmer steht ein Bett. · Yatak odasında bir yatak var.'], 7),
       L('u7l2', 'Eşyalar', 'Mobilya ve ev eşyaları', 'Kelime', ['tisch', 'stuhl', 'bett', 'schrank', 'sofa', 'tuer', 'fenster'],
-        'Yer belirten Dativ', '“auf dem Tisch”, “im Schrank”, “am Fenster”: bulunma anlamında eril/nötr isimler “dem”, dişil isimler “der” alır. Fiil ikinci sırada kalır: Das Buch liegt auf dem Tisch.',
+        'Yer bildiren Dativ', '“auf dem Tisch”, “im Schrank”, “am Fenster”: bulunma anlamında eril/nötr isimler “dem”, dişil isimler “der” alır. Fiil ikinci sırada kalır: Das Buch liegt auf dem Tisch.',
         ['Das Buch liegt auf dem Tisch. · Kitap masanın üzerinde.', 'Die Kleidung ist im Schrank. · Kıyafetler dolapta.', 'Die Tür ist offen. · Kapı açık.'], 7),
       L('u7l3', 'Nerede?', 'Yer edatları', 'Kelime', ['in', 'auf', 'unter', 'neben', 'vor', 'hinter'],
         'Wo? / Wohin?', '“Wo?” (nerede) sorusuna Dativ, “Wohin?” (nereye) sorusuna Akkusativ ile cevap verilir. Wo? auf dem Tisch. Wohin? auf den Tisch. Şimdilik yer tarifinde Dativ’i sağlamlaştır.',
@@ -391,7 +391,7 @@ export const UNITS = [
         'Modal fiiller: müssen / können', 'Modal fiilden sonra ana fiil mastar hâlinde cümle sonuna gider: “Ich muss heute lernen.” “Ich kann gut Deutsch sprechen.” Modal fiil ikinci sırada çekimlenir.',
         ['Die Prüfung ist am Freitag. · Sınav cuma günü.', 'Ich mache meine Hausaufgabe. · Ev ödevimi yapıyorum.', 'Ich muss heute lernen. · Bugün çalışmam gerekiyor.'], 8),
       L('u8l3', 'Ne sıklıkla?', 'Sıklık zarfları', 'Kelime', ['immer', 'oft', 'manchmal', 'nie', 'frueh', 'spaet'],
-        'Sıklık zarflarının yeri', 'Sıklık zarfları genellikle fiilden sonra gelir: “Ich stehe oft früh auf.” “Immer” %100, “oft” sık, “manchmal” bazen, “nie” hiç anlamındadır. “nie” cümlede olumsuzluk yapar, ayrıca “nicht” gerekmez.',
+        'Sıklık zarflarının yeri', 'Sıklık zarfları genellikle çekimli fiilden sonra gelir: “Ich stehe oft früh auf.” Cümle başında da durabilir: “Manchmal lerne ich im Café.” “Immer” %100, “oft” sık, “manchmal” bazen, “nie” hiç anlamındadır. “nie” cümlede olumsuzluk yapar, ayrıca “nicht” gerekmez.',
         ['Ich bin immer pünktlich. · Her zaman dakikim.', 'Manchmal lerne ich im Café. · Bazen kafede çalışıyorum.', 'Ich stehe früh auf. · Erken kalkıyorum.'], 7),
     ],
   },
@@ -454,8 +454,8 @@ export const UNITS = [
       L('u12l2', 'Planlar', 'Gelecek ve niyetler', 'Kelime', ['morgen_zeit', 'naechste_woche', 'wollen', 'planen', 'besuchen', 'bleiben'],
         'Gelecek için şimdiki zaman', 'Almancada gelecek çoğu zaman şimdiki zaman + zaman ifadesiyle kurulur: “Morgen fahre ich nach Köln.” “wollen” isteği belirtir: Wir wollen nach Berlin fahren. Modal fiilden sonra fiil sonda mastar hâlindedir.',
         ['Morgen fahre ich nach Köln. · Yarın Köln’e gidiyorum.', 'Nächste Woche beginnt mein Kurs. · Gelecek hafta kursum başlıyor.', 'Wir wollen nach Berlin fahren. · Berlin’e gitmek istiyoruz.'], 8),
-      L('u12l3', 'Geçmiş olsun', 'Perfekt ile geçmiş zaman', 'Dil bilgisi', ['gemacht', 'gesehen', 'gegessen', 'getrunken', 'gefahren', 'gewesen'],
-        'Perfekt: haben / sein + ortaç', 'Geçmiş zaman konuşurken “haben” veya “sein” + ortaç kullanılır: Ich habe gegessen. Wir sind gefahren. Hareket bildiren fiiller (fahren, gehen, kommen) ve “sein/bleiben” genellikle “sein” alır. Ortaç cümle sonundadır.',
+      L('u12l3', 'Dün ne yaptın?', 'Perfekt ile geçmiş zaman', 'Dil bilgisi', ['gemacht', 'gesehen', 'gegessen', 'getrunken', 'gefahren', 'gewesen'],
+        'Perfekt: haben / sein + Partizip II', 'Geçmiş zamanı anlatırken yardımcı fiil “haben” veya “sein” + Partizip II (ortaç) kullanılır: Ich habe gegessen. Wir sind gefahren. Yer değiştirme bildiren fiiller (gehen, kommen, fahren, fliegen) ve “sein / bleiben” çoğunlukla “sein” alır. Partizip II cümlenin sonundadır.',
         ['Ich habe Berlin gesehen. · Berlin’i gördüm.', 'Wir haben Döner gegessen. · Döner yedik.', 'Wir sind nach Berlin gefahren. · Berlin’e gittik.'], 8),
     ],
   },
@@ -484,12 +484,12 @@ export const LEVELS = [
 ];
 
 export const UNIT_COLORS = {
-  blue: { main: '#2D4EF5', soft: '#E8EBFF', ink: '#1B2B7A' },
-  coral: { main: '#F45B3C', soft: '#FFEAE4', ink: '#7A2A1A' },
-  violet: { main: '#8B6FE8', soft: '#F0EBFF', ink: '#3F2E7A' },
-  amber: { main: '#D99B1E', soft: '#FFF2D6', ink: '#6E4B09' },
-  rose: { main: '#D94F7E', soft: '#FFE9F0', ink: '#7A1F3D' },
-  teal: { main: '#0E8C7F', soft: '#DDF5F1', ink: '#07544C' },
+  blue: { main: '#1A56DB', soft: '#E9EFFD', ink: '#0B2A6F' },
+  coral: { main: '#0B1118', soft: '#EEF1F6', ink: '#0B1118' },
+  violet: { main: '#123FA8', soft: '#E3EBFB', ink: '#0B2A6F' },
+  amber: { main: '#526173', soft: '#EEF2F7', ink: '#26303C' },
+  rose: { main: '#202A36', soft: '#F4F6F9', ink: '#0B1118' },
+  teal: { main: '#3F6FB5', soft: '#E9EFFD', ink: '#0B2A6F' },
 };
 
 export function getVocab(id) {

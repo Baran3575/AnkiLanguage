@@ -202,9 +202,7 @@ function VocabCard({ vocab, stats }) {
       </p>
       <VocabSplit vocab={vocab || { total: 224, new: 224, learning: 0, review: 0, mastered: 0 }} />
       <div className="vocab-foot-row">
-        <span><i className="dot mastered" /> {vocab?.mastered || 0} ustalık</span>
-        <span><i className="dot review" /> {vocab?.review || 0} tekrar</span>
-        <span><i className="dot learning" /> {vocab?.learning || 0} öğrenme</span>
+        <span>{vocab?.total || 224} toplam kelime</span>
         <button type="button" className="text-link" onClick={() => navigate('/review')}>
           Tekrarlar <ChevronRight size={14} />
         </button>
@@ -222,7 +220,7 @@ function ForecastCard({ forecast, due }) {
           <span className="card-eyebrow">Tekrar dalgası</span>
           <h3>{due || 0} kelime bugün</h3>
         </div>
-        <Chip tone="blue" icon={Layers3}>FSRS-7R</Chip>
+        <Chip tone="blue" icon={Layers3}>FSRS-7</Chip>
       </div>
       <ForecastBars data={forecast || []} height={142} />
       <div className="forecast-foot">
@@ -345,7 +343,7 @@ export default function Today() {
       <NextWords words={nextWords} />
 
       <footer className="today-footer">
-        <span><i className="live-dot" /> FSRS-7R · 7 günlük recency katmanı</span>
+        <span><i className="live-dot" /> FSRS-7 · 7 günlük recency katmanı</span>
         <span>Son güncelleme: {new Date(dashboard.generatedAt).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</span>
       </footer>
     </div>

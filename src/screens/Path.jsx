@@ -19,7 +19,7 @@ function PathNode({ lesson, index, unit, onOpen }) {
   const isCheckpoint = lesson.isCheckpoint;
   const shiftClass = index % 2 === 0 ? 'node-left' : 'node-right';
   const labelSide = index % 2 === 0 ? 'label-right' : 'label-left';
-  const unitColor = unit.colorMain || '#2F4BF0';
+  const unitColor = unit.colorMain || 'var(--blue)';
   const statusText = status === 'completed'
     ? `Tamamlandı${lesson.score ? ` · %${Math.round(lesson.score * 100)}` : ''}`
     : status === 'current'
@@ -65,8 +65,8 @@ function UnitSection({ unit, onOpen }) {
     <motion.section
       className={`unit-section unit-${unit.color} status-${unit.status}`}
       style={{
-        '--unit-color': unit.colorMain || '#2F4BF0',
-        '--unit-soft': unit.colorSoft || '#E8EBFF',
+        '--unit-color': unit.colorMain || 'var(--blue)',
+        '--unit-soft': unit.colorSoft || 'var(--blue-soft)',
       }}
       initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -222,7 +222,7 @@ export default function Path() {
         <p>
           {level === 'A1.1'
             ? 'Altı üniteyi bitirince A1.2’ye geçeceksin. Checkpoint’ler açılan kapıların anahtarı.'
-            : 'Tüm yolu tamamladığında kelimelerin canlı kalmaya devam edecek. FSRS-7R tekrarları hiç durmaz.'}
+            : 'Tüm yolu tamamladığında kelimelerin canlı kalmaya devam edecek. FSRS-7 tekrarları hiç durmaz.'}
         </p>
       </div>
     </div>

@@ -41,7 +41,7 @@ export default function Welcome({ onStart }) {
           >
             <div className="welcome-eyebrow">
               <span className="welcome-badge"><i /> A1.1 – A1.2</span>
-              <span>FSRS-7R · Recency</span>
+              <span>FSRS-7 · Recency</span>
             </div>
             <h1>
               Almanca,<br />
@@ -120,7 +120,7 @@ export default function Welcome({ onStart }) {
             <Flame size={16} /><strong>21 gün</strong><span>seri</span>
           </motion.div>
           <motion.div className="floating-pill fsrs-pill" {...float(0.4)}>
-            <span>FSRS-7R</span><small>recency</small>
+            <span>FSRS-7</span><small>recency</small>
           </motion.div>
 
           <div className="welcome-stamp">

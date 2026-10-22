@@ -245,6 +245,8 @@ export function computeBrain({ user, words = [], reviews = [], dailyStats = [], 
     personalization: {
       newWordsPerDay,
       desiredRetention: Number(context.desiredRetention.toFixed(3)),
+      stabilityMultiplier: Number(context.stabilityMultiplier.toFixed(3)),
+      lapseRate: Number((recent.lapseRate || 0).toFixed(3)),
       reviewCap: Math.round(clamp(goal * 1.8, 12, 40)),
       sessionMinutes: goal,
       exerciseMix: mix,

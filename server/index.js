@@ -74,7 +74,7 @@ function loadBrain(user, words, reviews, dailyStats, progress) {
 function brainContext(brain) {
   return {
     desiredRetention: brain?.personalization?.desiredRetention ?? 0.9,
-    stabilityMultiplier: 1,
+    stabilityMultiplier: brain?.personalization?.stabilityMultiplier ?? 1,
   };
 }
 
@@ -482,8 +482,8 @@ function seedDemo() {
   if (getUser('demo')) return;
   const state = buildDemoState(new Date());
   const insertWord = db.prepare(`
-    INSERT INTO user_words (user_id, vocab_id, state, stability, difficulty, reps, lapses, exposures, correct_count, wrong_count, first_seen, last_review, due_at, last_grade)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO user_words (user_id, vocab_id, state, stability, stability_short, difficulty, reps, lapses, exposures, correct_count, wrong_count, first_seen, last_review, due_at, last_grade)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
   db.exec('BEGIN');
   try {
@@ -496,16 +496,17 @@ function seedDemo() {
       JSON.stringify(state.user.profile), JSON.stringify(state.user.settings)
     );
     for (const w of state.words) {
-      insertWord.run('demo', w.vocab_id, w.state, w.stability, w.difficulty, w.reps, w.lapses, w.exposures,
+      insertWord.run('demo', w.vocab_id, w.state, w.stability, w.stability_short ?? w.stabilityShort ?? 0, w.difficulty, w.reps, w.lapses, w.exposures,
         w.correct_count, w.wrong_count, w.first_seen, w.last_review, w.due_at, w.last_grade);
     }
     const insertRev = db.prepare(`
-      INSERT INTO reviews (id, user_id, vocab_id, lesson_id, exercise_type, grade, correct, latency_ms, stability_before, stability_after, difficulty_after, interval_days, reviewed_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO reviews (id, user_id, vocab_id, lesson_id, exercise_type, grade, correct, latency_ms, stability_before, stability_short_before, stability_after, stability_short_after, difficulty_after, predicted_recall, interval_days, reviewed_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
     for (const r of state.reviews) {
       insertRev.run(r.id, 'demo', r.vocab_id, r.lesson_id, r.exercise_type, r.grade, r.correct, r.latency_ms,
-        r.stability_before, r.stability_after, r.difficulty_after, r.interval_days, r.reviewed_at);
+        r.stability_before, r.stability_short_before, r.stability_after, r.stability_short_after,
+        r.difficulty_after, r.predicted_recall, r.interval_days, r.reviewed_at);
     }
     const insertProgress = db.prepare(`
       INSERT INTO lesson_progress (user_id, lesson_id, completed, best_score, attempts, last_at, completed_at)
@@ -535,14 +536,14 @@ seedDemo();
 /* ── Routes ────────────────────────────────────────────────────── */
 
 app.get('/api/health', (req, res) => {
-  res.json({ ok: true, service: 'wort', fsrs: 'FSRS-7R', users: listUsers().length, db: process.env.WORT_DB || 'data/wort.db' });
+  res.json({ ok: true, service: 'wort', fsrs: 'FSRS-7', users: listUsers().length, db: process.env.WORT_DB || 'data/wort.db' });
 });
 
 app.get('/api/meta', (req, res) => {
   res.json({
     name: 'wort.',
     levels: LEVELS.map((l) => ({ id: l.id, title: l.title, subtitle: l.subtitle, description: l.description, units: l.units.length })),
-    versions: { scheduler: 'FSRS-7R', brain: 'brain-v1', content: 'A1.1-A1.2' },
+    versions: { scheduler: 'FSRS-7', brain: 'brain-v1', content: 'A1.1-A1.2' },
     totalVocab: VOCAB_LIST.length,
     totalLessons: Object.keys(ALL_LESSONS).length,
   });
@@ -597,7 +598,7 @@ app.get('/api/users/:id/bootstrap', (req, res) => {
     dashboard,
     path: buildPath(req.params.id),
     brain: dashboard.brain,
-    meta: { scheduler: 'FSRS-7R', totalVocab: VOCAB_LIST.length, totalLessons: Object.keys(ALL_LESSONS).length },
+    meta: { scheduler: 'FSRS-7', totalVocab: VOCAB_LIST.length, totalLessons: Object.keys(ALL_LESSONS).length },
   });
 });
 
@@ -717,8 +718,11 @@ app.post('/api/users/:id/lesson/:lessonId/complete', (req, res) => {
           correct: grade > 1,
           latencyMs: latency,
           stabilityBefore: existing?.stability || 0,
+          stabilityShortBefore: existing?.stability_short ?? 0,
           stabilityAfter: next.stability,
+          stabilityShortAfter: next.stabilityShort,
           difficultyAfter: next.difficulty,
+          predictedRecall: next.recallBefore,
           intervalDays: next.intervalDays,
           reviewedAt: now.toISOString(),
         });
@@ -764,7 +768,7 @@ app.post('/api/users/:id/lesson/:lessonId/complete', (req, res) => {
       ? 'Checkpoint %80 gerektiriyor. Blokları tekrar edip yeniden dene.'
       : newWordCount > 0
         ? `${newWordCount} yeni kelime hafızana eklendi. Yarın kısa bir tekrar seni bekliyor.`
-        : 'Tekrar tamam. FSRS-7R bir sonraki buluşmayı planladı.',
+        : 'Tekrar tamam. FSRS-7 bir sonraki buluşmayı planladı.',
   });
 });
 
@@ -807,8 +811,11 @@ app.post('/api/users/:id/review', (req, res) => {
     correct: g > 1,
     latencyMs,
     stabilityBefore: existing.stability,
+    stabilityShortBefore: existing.stability_short ?? 0,
     stabilityAfter: next.stability,
+    stabilityShortAfter: next.stabilityShort,
     difficultyAfter: next.difficulty,
+    predictedRecall: next.recallBefore,
     intervalDays: next.intervalDays,
   });
   recordStudy(userId, { minutes: 0.25, xp: 3, reviews: 1, correct: g > 1 ? 1 : 0 });

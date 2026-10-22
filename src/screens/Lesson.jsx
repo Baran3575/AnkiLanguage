@@ -10,7 +10,7 @@ import { navigate } from '../lib/router.js';
 import { answersMatch, normalizeAnswer } from '../../shared/exercises.js';
 import { articleParts } from '../lib/format.js';
 import { playCorrect, playIncorrect, playComplete, haptic } from '../lib/sound.js';
-import { speakGerman } from '../lib/speech.js';
+import { speakGerman, stopSpeaking } from '../lib/speech.js';
 import {
   ArticleDot, AudioButton, Badge, Button, Chip, GermanWord, Keycap, Logo, ProgressBar, Skeleton,
 } from '../components/ui.jsx';
@@ -74,7 +74,7 @@ function Intro({ data, onStart, onExit }) {
               <span className="card-eyebrow">{data.isCheckpoint ? 'Tekrar edilecekler' : 'Bu blokta'}</span>
               <h2>{data.isCheckpoint ? `${words.length} kelime` : `${words.length} yeni kelime`}</h2>
             </div>
-            <Badge tone="soft">FSRS-7R</Badge>
+            <Badge tone="soft">FSRS-7</Badge>
           </div>
           <div className={`intro-word-list ${data.isCheckpoint ? 'is-checkpoint' : ''}`}>
             {words.slice(0, data.isCheckpoint ? 18 : 8).map((word) => (
@@ -405,7 +405,7 @@ function Summary({ result, data, onNext, onRetry, onPath, failed }) {
             <i key={i} style={{
               left: `${8 + (i * 37) % 84}%`,
               animationDelay: `${(i % 7) * 0.08}s`,
-              background: ['#D5F26A', '#2F4BF0', '#F15B3D', '#F1B63D'][i % 4],
+              background: ['#8fb4ff', '#1a56db', '#0b1118', '#c7d0dc'][i % 4],
             }} />
           ))}
         </div>
@@ -418,7 +418,7 @@ function Summary({ result, data, onNext, onRetry, onPath, failed }) {
       <p className="summary-sub">
         {failed
           ? 'Checkpoint %80 doğruluk istiyor. Kelimelere dönüp yeniden deneyebilirsin.'
-          : result?.message || 'Kelimeler hafızana işlendi. FSRS-7R bir sonraki buluşmayı planladı.'}
+          : result?.message || 'Kelimeler hafızana işlendi. FSRS-7 bir sonraki buluşmayı planladı.'}
       </p>
 
       <div className="summary-stats">
@@ -650,11 +650,14 @@ export default function Lesson({ lessonId }) {
   });
 
   useEffect(() => {
-    if (item?.type === 'listen' && started && phase === 'question' && user?.settings?.tts !== false) {
-      const t = setTimeout(() => speakGerman(item.audioText), 450);
-      return () => clearTimeout(t);
+    if (item?.type !== 'listen' || !started || phase !== 'question' || user?.settings?.tts === false) {
+      return undefined;
     }
-    return undefined;
+    const t = setTimeout(() => { speakGerman(item.audioText); }, 520);
+    return () => {
+      clearTimeout(t);
+      stopSpeaking();
+    };
   }, [item?.id, started, phase, user?.settings?.tts]);
 
   if (loading) {
@@ -733,11 +736,11 @@ export default function Lesson({ lessonId }) {
                 <motion.div key="submitting" className="lesson-submitting" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                   <span className="spinner-ring" />
                   <h2>Sonuçlar hafızana işleniyor…</h2>
-                  <p>FSRS-7R bir sonraki tekrarı hesaplıyor.</p>
+                  <p>FSRS-7 bir sonraki tekrarı hesaplıyor.</p>
                 </motion.div>
               ) : (
                 <motion.div
-                  className="exercise-card"
+                  className={`exercise-card${item?.type === 'match' ? ' is-match' : ''}`}
                   key={item?.id || 'item'}
                   initial={{ opacity: 0, x: 26 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -776,7 +779,7 @@ export default function Lesson({ lessonId }) {
                     ) : (
                       item?.type === 'match' ? (
                         <div className="check-row is-auto">
-                          <span className="key-hint"><Sparkles size={13} /> Eşleştirme tamamlanınca otomatik ilerler.</span>
+                          <span className="key-hint"><Sparkles size={13} /> Tüm eşleşmeler bitince sonucu görürsün.</span>
                         </div>
                       ) : (
                         <div className="check-row">

@@ -106,7 +106,7 @@
 }
 
 .level-tab.is-active .level-tab-id {
-  border-color: rgba(217, 242, 107, 0.35);
+  border-color: rgba(219, 231, 255, 0.35);
   background: var(--lime);
   color: var(--ink);
 }
@@ -275,7 +275,7 @@
 }
 
 .unit-section.status-locked {
-  background: #eeece5;
+  background: var(--bg-deep);
   border-color: rgba(25, 27, 31, 0.04);
 }
 
@@ -334,8 +334,8 @@
 }
 
 .status-locked .unit-badge {
-  background: #c8c5ba;
-  color: #f7f5ef;
+  background: var(--line-strong);
+  color: var(--bg);
   box-shadow: none;
 }
 
@@ -482,7 +482,7 @@
 
 .path-node.is-checkpoint {
   border-radius: 20px;
-  background: #fffdf7;
+  background: var(--surface);
   color: var(--unit-color);
   border: 2px solid var(--unit-color);
   box-shadow: inset 0 0 0 4px var(--unit-soft), 0 4px 0 rgba(25, 27, 31, 0.1);
@@ -528,7 +528,7 @@
 .path-node-wrap.status-locked .path-node {
   border-color: rgba(25, 27, 31, 0.13);
   background: rgba(255, 255, 255, 0.48);
-  color: #a3a097;
+  color: var(--muted-2);
   box-shadow: 0 3px 0 rgba(25, 27, 31, 0.045);
 }
 

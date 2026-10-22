@@ -4,7 +4,7 @@ import {
   Volume2, X, LoaderCircle, Check, ArrowRight, Sparkles,
 } from 'lucide-react';
 import { genderTone, articleParts } from '../lib/format.js';
-import { speakGerman } from '../lib/speech.js';
+import { speakGerman, stopSpeaking } from '../lib/speech.js';
 
 export function Logo({ tone = 'dark', small = false, className = '' }) {
   return (
@@ -76,26 +76,62 @@ export function GermanWord({ de, className = '', showArticle = true }) {
 
 export function AudioButton({ text, size = 'md', label = 'Dinle', variant = 'soft', className = '', slow = false }) {
   const [speaking, setSpeaking] = useState(false);
+  const [failed, setFailed] = useState(false);
   const timer = useRef(null);
-  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
-  function play(e) {
-    e?.stopPropagation?.();
-    setSpeaking(true);
-    const ok = speakGerman(text, {
-      rate: slow ? 0.7 : 0.88,
-      onEnd: () => setSpeaking(false),
-    });
-    if (!ok) setSpeaking(false);
+  const tick = useRef(0);
+
+  useEffect(() => () => {
     if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(() => setSpeaking(false), Math.max(1400, (text?.length || 6) * 110));
+    tick.current += 1;
+  }, []);
+
+  async function play(e) {
+    e?.stopPropagation?.();
+    e?.preventDefault?.();
+    if (speaking) {
+      stopSpeaking();
+      setSpeaking(false);
+      return;
+    }
+    const id = ++tick.current;
+    setSpeaking(true);
+    setFailed(false);
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      if (tick.current === id) setSpeaking(false);
+    }, Math.min(18_000, Math.max(2_200, (text?.length || 6) * 120 + 1_400)));
+
+    const ok = await speakGerman(text, {
+      slow,
+      onEnd: () => {
+        if (tick.current === id) {
+          if (timer.current) clearTimeout(timer.current);
+          setSpeaking(false);
+        }
+      },
+      onError: () => {
+        if (tick.current === id) {
+          if (timer.current) clearTimeout(timer.current);
+          setSpeaking(false);
+          setFailed(true);
+          setTimeout(() => setFailed(false), 2800);
+        }
+      },
+    });
+    if (!ok && tick.current === id) {
+      if (timer.current) clearTimeout(timer.current);
+      setSpeaking(false);
+    }
   }
+
   return (
     <button
       type="button"
-      className={`audio-btn audio-btn-${size} audio-btn-${variant} ${speaking ? 'is-speaking' : ''} ${className}`}
+      className={`audio-btn audio-btn-${size} audio-btn-${variant} ${speaking ? 'is-speaking' : ''} ${failed ? 'is-error' : ''} ${className}`}
       onClick={play}
       aria-label={`${label}: ${text}`}
-      title={`${label}: ${text}`}
+      aria-pressed={speaking}
+      title={failed ? 'Almanca ses paketi kullanılamıyor' : `${label}: ${text}`}
     >
       <span className="audio-lines" aria-hidden>
         <i /><i /><i />

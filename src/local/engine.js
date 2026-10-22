@@ -2,7 +2,7 @@
  * Offline engine for the Capacitor Android build.
  *
  * It mirrors the REST surface in `server/index.js` and reuses the exact same
- * content, exercise generator, brain model and FSRS-7R scheduler. State lives
+ * content, exercise generator, brain model and FSRS-7 scheduler. State lives
  * in localStorage so the app works with no network and no hosted API.
  */
 import {
@@ -171,7 +171,7 @@ function brainFor(s, userId, words, reviews, dailyStats, progress) {
 function brainContext(brain) {
   return {
     desiredRetention: brain?.personalization?.desiredRetention ?? 0.9,
-    stabilityMultiplier: 1,
+    stabilityMultiplier: brain?.personalization?.stabilityMultiplier ?? 1,
   };
 }
 
@@ -630,7 +630,8 @@ function upsertWord(s, userId, vocabId, values) {
 
 function insertReview(s, userId, {
   vocabId, lessonId = null, exerciseType = 'flashcard', grade, correct,
-  latencyMs, stabilityBefore, stabilityAfter, difficultyAfter, intervalDays,
+  latencyMs, stabilityBefore, stabilityShortBefore, stabilityAfter,
+  stabilityShortAfter, difficultyAfter, predictedRecall, intervalDays,
   reviewedAt = new Date().toISOString(),
 }) {
   if (!s.reviews[userId]) s.reviews[userId] = [];
@@ -646,8 +647,11 @@ function insertReview(s, userId, {
     correct: correct ? 1 : 0,
     latency_ms: latencyMs ?? null,
     stability_before: stabilityBefore ?? null,
+    stability_short_before: stabilityShortBefore ?? null,
     stability_after: stabilityAfter ?? null,
+    stability_short_after: stabilityShortAfter ?? null,
     difficulty_after: difficultyAfter ?? null,
+    predicted_recall: predictedRecall ?? null,
     interval_days: intervalDays ?? null,
     reviewed_at: reviewedAt,
   });
@@ -762,7 +766,7 @@ export const localApi = {
     return {
       name: 'wort.',
       levels: LEVELS.map((l) => ({ id: l.id, title: l.title, subtitle: l.subtitle, description: l.description, units: l.units.length })),
-      versions: { scheduler: 'FSRS-7R', brain: 'brain-v1', content: 'A1.1-A1.2', storage: 'local' },
+      versions: { scheduler: 'FSRS-7', brain: 'brain-v1', content: 'A1.1-A1.2', storage: 'local' },
       totalVocab: VOCAB_LIST.length,
       totalLessons: Object.keys(ALL_LESSONS).length,
     };
@@ -831,7 +835,7 @@ export const localApi = {
       dashboard,
       path: buildPath(s, userId),
       brain: dashboard.brain,
-      meta: { scheduler: 'FSRS-7R', totalVocab: VOCAB_LIST.length, totalLessons: Object.keys(ALL_LESSONS).length, storage: 'local' },
+      meta: { scheduler: 'FSRS-7', totalVocab: VOCAB_LIST.length, totalLessons: Object.keys(ALL_LESSONS).length, storage: 'local' },
     };
   },
 
@@ -924,8 +928,11 @@ export const localApi = {
           correct: grade > 1,
           latencyMs: latency,
           stabilityBefore: existing?.stability || 0,
+          stabilityShortBefore: existing?.stabilityShort ?? existing?.stability_short ?? 0,
           stabilityAfter: next.stability,
+          stabilityShortAfter: next.stabilityShort,
           difficultyAfter: next.difficulty,
+          predictedRecall: next.recallBefore,
           intervalDays: next.intervalDays,
           reviewedAt: now.toISOString(),
         });
@@ -958,7 +965,7 @@ export const localApi = {
         ? 'Checkpoint %80 gerektiriyor. Blokları tekrar edip yeniden dene.'
         : newWordCount > 0
           ? `${newWordCount} yeni kelime hafızana eklendi. Yarın kısa bir tekrar seni bekliyor.`
-          : 'Tekrar tamam. FSRS-7R bir sonraki buluşmayı planladı.',
+          : 'Tekrar tamam. FSRS-7 bir sonraki buluşmayı planladı.',
     };
   },
 
@@ -997,8 +1004,11 @@ export const localApi = {
       correct: g > 1,
       latencyMs,
       stabilityBefore: existing.stability,
+      stabilityShortBefore: existing.stabilityShort ?? existing.stability_short ?? 0,
       stabilityAfter: next.stability,
+      stabilityShortAfter: next.stabilityShort,
       difficultyAfter: next.difficulty,
+      predictedRecall: next.recallBefore,
       intervalDays: next.intervalDays,
     });
     recordStudy(s, userId, { minutes: 0.25, xp: 3, reviews: 1, correct: g > 1 ? 1 : 0 });

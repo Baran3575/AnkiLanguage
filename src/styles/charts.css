@@ -163,7 +163,7 @@
   width: 100%;
   min-height: 2px;
   border-radius: 8px;
-  background: #b8c1f8;
+  background: #b7ccf9;
   transition: height 500ms var(--ease-out);
 }
 
@@ -244,7 +244,7 @@
   display: block;
   width: 100%;
   border-radius: 7px;
-  background: #cbd1cc;
+  background: #c7d0dc;
   transition: height 500ms var(--ease-out), background 180ms ease;
 }
 
@@ -313,7 +313,7 @@
 }
 
 .accuracy-track > span.good { background: var(--moss); }
-.accuracy-track > span.ok { background: #d09a2b; }
+.accuracy-track > span.ok { background: var(--muted-2); }
 .accuracy-track > span.weak { background: var(--coral); }
 
 .accuracy-row small {
@@ -389,10 +389,10 @@
 }
 
 .heat-cell.level-0 { background: rgba(25, 27, 31, 0.055); }
-.heat-cell.level-1 { background: #dfe4cd; }
-.heat-cell.level-2 { background: #c8d88c; }
-.heat-cell.level-3 { background: #aac74e; }
-.heat-cell.level-4 { background: #7f9f25; }
+.heat-cell.level-1 { background: #dbe7ff; }
+.heat-cell.level-2 { background: #b7ccf9; }
+.heat-cell.level-3 { background: #6f93e8; }
+.heat-cell.level-4 { background: var(--blue); }
 .heat-cell.is-empty { background: transparent; }
 
 .heat-legend {
@@ -434,9 +434,9 @@
   transition: width 600ms var(--ease-out);
 }
 
-.vocab-strip .seg.mastered { background: var(--moss); }
+.vocab-strip .seg.mastered { background: var(--ink); }
 .vocab-strip .seg.review { background: var(--blue); }
-.vocab-strip .seg.learning { background: #eaaf32; }
+.vocab-strip .seg.learning { background: var(--muted-2); }
 
 .vocab-split-legend {
   display: flex;
@@ -463,7 +463,7 @@
 }
 
 .brainprint-lime { color: var(--lime); }
-.brainprint-blue { color: #7f92ff; }
+.brainprint-blue { color: #1a56db; }
 .brainprint-ink { color: var(--ink); }
 .brainprint-coral { color: var(--coral); }
 

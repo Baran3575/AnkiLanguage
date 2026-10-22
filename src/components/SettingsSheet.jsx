@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { LogOut, RotateCcw, ShieldCheck, Volume2, Sparkles, Brain, SlidersHorizontal } from 'lucide-react';
+import { LogOut, RotateCcw, ShieldCheck, Volume2, Sparkles, Brain, SlidersHorizontal, Download } from 'lucide-react';
 import { useApp } from '../lib/store.jsx';
 import { Button, Sheet, Chip } from './ui.jsx';
 import { ConfidenceRing } from './BrainVisual.jsx';
+import { getSpeechInfo, openTtsInstall, speakGerman } from '../lib/speech.js';
 
 function Toggle({ checked, onChange, label, hint, icon: Icon }) {
   return (
@@ -26,17 +27,32 @@ export default function SettingsSheet() {
   const [saving, setSaving] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
   const [resetting, setResetting] = useState(false);
+  const [speech, setSpeech] = useState(null);
+  const [testingVoice, setTestingVoice] = useState(false);
 
   useEffect(() => {
     if (settingsOpen) {
       setName(user?.name || '');
       setGoal(user?.goalMinutes || 15);
       setConfirmReset(false);
+      let alive = true;
+      getSpeechInfo().then((info) => { if (alive) setSpeech(info); }).catch(() => {
+        if (alive) setSpeech({ available: false, message: 'Ses durumu okunamadı.' });
+      });
+      return () => { alive = false; };
     }
+    return undefined;
   }, [settingsOpen, user?.name, user?.goalMinutes]);
 
   const settings = user?.settings || {};
   const close = () => setSettingsOpen(false);
+
+  async function testVoice() {
+    setTestingVoice(true);
+    const ok = await speakGerman('Guten Morgen. Ich lerne Deutsch mit wort.', { rate: 0.9 });
+    setTestingVoice(false);
+    if (ok) showToast('Almanca ses çalışıyor.', 'success');
+  }
 
   async function toggle(key, value) {
     try {
@@ -136,7 +152,7 @@ export default function SettingsSheet() {
           checked={settings.tts !== false}
           onChange={(v) => toggle('tts', v)}
           label="Almanca telaffuz"
-          hint="Web Speech ile kelimeleri dinle"
+          hint="Cihazın yerel Alman sesiyle dinle"
           icon={Volume2}
         />
         <Toggle
@@ -148,9 +164,46 @@ export default function SettingsSheet() {
         />
       </section>
 
+      <section className="settings-section settings-speech">
+        <h4><Volume2 size={16} /> Almanca ses</h4>
+        <div className="speech-card">
+          <span className={`speech-dot ${speech?.available ? 'is-ready' : ''}`} aria-hidden />
+          <div>
+            <strong>{speech?.voice?.label || (speech ? (speech.available ? 'Almanca ses hazır' : 'Almanca ses bulunamadı') : 'Ses denetleniyor…')}</strong>
+            <small>{speech?.message || 'Cihazın konuşma motoru hazırlanıyor.'}</small>
+          </div>
+          <Button
+            size="sm"
+            variant="soft"
+            loading={testingVoice}
+            disabled={!speech?.available}
+            onClick={testVoice}
+          >
+            Dene
+          </Button>
+        </div>
+        {speech?.canInstall ? (
+          <button
+            type="button"
+            className="setting-row speech-install"
+            onClick={async () => {
+              const opened = await openTtsInstall();
+              if (!opened) showToast('Ses paketi yükleyicisi açılamadı. Android ayarlarından Google konuşma sentezini kontrol et.', 'error');
+            }}
+          >
+            <span className="setting-icon"><Download size={18} /></span>
+            <span className="setting-copy">
+              <strong>Almanca ses paketi yükle</strong>
+              <small>Android’in konuşma sentezi yükleyicisini açar.</small>
+            </span>
+            <Download size={16} className="speech-install-arrow" />
+          </button>
+        ) : null}
+      </section>
+
       <section className="settings-section settings-about">
         <h4>Motor</h4>
-        <div className="engine-row"><span>Zamanlayıcı</span><strong>FSRS-7R · Recency</strong></div>
+        <div className="engine-row"><span>Zamanlayıcı</span><strong>FSRS-7 · Recency</strong></div>
         <div className="engine-row"><span>Beyin modeli</span><strong>brain-v1</strong></div>
         <div className="engine-row"><span>İçerik</span><strong>A1.1 – A1.2 · 224 kelime</strong></div>
       </section>

@@ -23,7 +23,7 @@
   border-radius: var(--radius-xl);
   background:
     radial-gradient(circle at 87% -2%, rgba(47, 75, 240, 0.52), transparent 38%),
-    radial-gradient(circle at 12% 118%, rgba(217, 242, 107, 0.07), transparent 31%),
+    radial-gradient(circle at 12% 118%, rgba(219, 231, 255, 0.07), transparent 31%),
     var(--ink);
   color: #fff;
   box-shadow: 0 26px 55px -32px rgba(23, 25, 30, 0.55);
@@ -69,7 +69,7 @@
 
 .brain-live .live-dot {
   background: var(--lime);
-  box-shadow: 0 0 0 3px rgba(217, 242, 107, 0.13);
+  box-shadow: 0 0 0 3px rgba(219, 231, 255, 0.13);
 }
 
 .brain-hero-id {
@@ -121,10 +121,10 @@
 
 .brain-print-label {
   position: absolute;
+  top: -16px;
   right: 0;
-  bottom: 7px;
-  color: rgba(255, 255, 255, 0.2);
-  font-size: 7px;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 7.5px;
   font-weight: 650;
   letter-spacing: 0.11em;
   text-transform: uppercase;
@@ -146,7 +146,7 @@
 }
 
 .brain-hero-meta svg {
-  color: rgba(217, 242, 107, 0.72);
+  color: rgba(219, 231, 255, 0.72);
 }
 
 .brain-hero-side {
@@ -223,9 +223,9 @@
   width: 35px;
   height: 35px;
   flex-shrink: 0;
-  border: 1px solid rgba(217, 242, 107, 0.15);
+  border: 1px solid rgba(219, 231, 255, 0.15);
   border-radius: 10px;
-  background: rgba(217, 242, 107, 0.1);
+  background: rgba(219, 231, 255, 0.1);
   color: var(--lime);
 }
 
@@ -325,7 +325,7 @@
 .brain-metric-row:nth-child(2) .bm-icon { background: var(--moss-soft); color: var(--moss); }
 .brain-metric-row:nth-child(3) .bm-icon { background: var(--coral-soft); color: var(--coral); }
 .brain-metric-row:nth-child(4) .bm-icon { background: var(--violet-soft); color: var(--violet); }
-.brain-metric-row:nth-child(5) .bm-icon { background: var(--amber-soft); color: #9a6808; }
+.brain-metric-row:nth-child(5) .bm-icon { background: var(--amber-soft); color: var(--blue-deep); }
 
 .bm-main {
   flex: 1;
@@ -419,7 +419,7 @@
 
 .plan-icon.blue { background: var(--blue-soft); color: var(--blue); }
 .plan-icon.green { background: var(--moss-soft); color: var(--moss); }
-.plan-icon.amber { background: var(--amber-soft); color: #9a6808; }
+.plan-icon.amber { background: var(--amber-soft); color: var(--blue-deep); }
 .plan-icon.violet { background: var(--violet-soft); color: var(--violet); }
 
 .brain-plan-list > div > div {

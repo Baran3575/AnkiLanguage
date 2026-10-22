@@ -393,7 +393,7 @@ function ResultStep({ profile, name, goal, busy, onStart }) {
       <div className="result-note">
         <Sparkles size={17} />
         <p>
-          İlk blokta <strong>7 yeni kelime</strong> seni bekliyor. Her cevap FSRS-7R
+          İlk blokta <strong>7 yeni kelime</strong> seni bekliyor. Her cevap FSRS-7
           zamanlayıcısına bir sinyal olarak geri döner.
         </p>
       </div>
@@ -454,7 +454,7 @@ export default function Onboarding({ onBackToWelcome }) {
           <div className="ob-aside-list">
             <span><i><Brain size={15} /></i> Beyin profili</span>
             <span><i><Clock3 size={15} /></i> Sana göre tempo</span>
-            <span><i><Sparkles size={15} /></i> FSRS-7R planı</span>
+            <span><i><Sparkles size={15} /></i> FSRS-7 planı</span>
           </div>
         </div>
         <div className="ob-aside-quote">

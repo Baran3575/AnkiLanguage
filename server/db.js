@@ -70,6 +70,7 @@ db.exec(`
     vocab_id TEXT NOT NULL,
     state TEXT NOT NULL DEFAULT 'new',
     stability REAL NOT NULL DEFAULT 0,
+    stability_short REAL NOT NULL DEFAULT 0,
     difficulty REAL NOT NULL DEFAULT 0,
     reps INTEGER NOT NULL DEFAULT 0,
     lapses INTEGER NOT NULL DEFAULT 0,
@@ -106,8 +107,11 @@ db.exec(`
     correct INTEGER NOT NULL,
     latency_ms INTEGER,
     stability_before REAL,
+    stability_short_before REAL,
     stability_after REAL,
+    stability_short_after REAL,
     difficulty_after REAL,
+    predicted_recall REAL,
     interval_days REAL,
     reviewed_at TEXT NOT NULL
   );
@@ -140,6 +144,21 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_user_words_due ON user_words(user_id, due_at);
   CREATE INDEX IF NOT EXISTS idx_daily_user_day ON daily_stats(user_id, day);
 `);
+
+/*
+ * Additive migrations. Older v1 databases keep their review history; FSRS-7
+ * derives a short-term stability of 0.8 × long-term stability when the new
+ * column is still zero.
+ */
+function ensureColumn(table, column, definition) {
+  const exists = db.prepare(`PRAGMA table_info(${table})`).all().some((c) => c.name === column);
+  if (!exists) db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+}
+
+ensureColumn('user_words', 'stability_short', 'REAL NOT NULL DEFAULT 0');
+ensureColumn('reviews', 'stability_short_before', 'REAL');
+ensureColumn('reviews', 'stability_short_after', 'REAL');
+ensureColumn('reviews', 'predicted_recall', 'REAL');
 
 export function nowIso() {
   return new Date().toISOString();
@@ -290,10 +309,11 @@ export function upsertUserWord(userId, vocabId, values) {
   const existing = getUserWord(userId, vocabId);
   const payload = { ...existing, ...values };
   db.prepare(`
-    INSERT INTO user_words (user_id, vocab_id, state, stability, difficulty, reps, lapses, exposures, correct_count, wrong_count, first_seen, last_review, due_at, last_grade)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO user_words (user_id, vocab_id, state, stability, stability_short, difficulty, reps, lapses, exposures, correct_count, wrong_count, first_seen, last_review, due_at, last_grade)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(user_id, vocab_id) DO UPDATE SET
-      state=excluded.state, stability=excluded.stability, difficulty=excluded.difficulty,
+      state=excluded.state, stability=excluded.stability,
+      stability_short=excluded.stability_short, difficulty=excluded.difficulty,
       reps=excluded.reps, lapses=excluded.lapses, exposures=excluded.exposures,
       correct_count=excluded.correct_count, wrong_count=excluded.wrong_count,
       first_seen=excluded.first_seen, last_review=excluded.last_review,
@@ -302,6 +322,7 @@ export function upsertUserWord(userId, vocabId, values) {
     userId, vocabId,
     payload.state ?? 'new',
     payload.stability ?? 0,
+    payload.stability_short ?? payload.stabilityShort ?? (payload.stability ? payload.stability * 0.8 : 0),
     payload.difficulty ?? 0,
     payload.reps ?? 0,
     payload.lapses ?? 0,
@@ -315,11 +336,24 @@ export function upsertUserWord(userId, vocabId, values) {
   );
 }
 
-export function insertReview(userId, { vocabId, lessonId = null, exerciseType = 'flashcard', grade, correct, latencyMs, stabilityBefore, stabilityAfter, difficultyAfter, intervalDays, reviewedAt = nowIso() }) {
+export function insertReview(userId, {
+  vocabId, lessonId = null, exerciseType = 'flashcard', grade, correct, latencyMs,
+  stabilityBefore, stabilityShortBefore, stabilityAfter, stabilityShortAfter,
+  difficultyAfter, predictedRecall, intervalDays, reviewedAt = nowIso(),
+}) {
   db.prepare(`
-    INSERT INTO reviews (user_id, vocab_id, lesson_id, exercise_type, grade, correct, latency_ms, stability_before, stability_after, difficulty_after, interval_days, reviewed_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `).run(userId, vocabId, lessonId, exerciseType, grade, correct ? 1 : 0, latencyMs ?? null, stabilityBefore ?? null, stabilityAfter ?? null, difficultyAfter ?? null, intervalDays ?? null, reviewedAt);
+    INSERT INTO reviews (
+      user_id, vocab_id, lesson_id, exercise_type, grade, correct, latency_ms,
+      stability_before, stability_short_before, stability_after,
+      stability_short_after, difficulty_after, predicted_recall, interval_days, reviewed_at
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    userId, vocabId, lessonId, exerciseType, grade, correct ? 1 : 0, latencyMs ?? null,
+    stabilityBefore ?? null, stabilityShortBefore ?? null, stabilityAfter ?? null,
+    stabilityShortAfter ?? null, difficultyAfter ?? null, predictedRecall ?? null,
+    intervalDays ?? null, reviewedAt,
+  );
 }
 
 export function getReviews(userId, { sinceDays = 60, limit = 2000 } = {}) {

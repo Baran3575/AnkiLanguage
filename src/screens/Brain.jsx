@@ -57,7 +57,7 @@ export default function Brain() {
           <p>Kalibrasyon ve {brain.evidence} cevabın birleşimi. Her metrik bir davranışa dayanıyor.</p>
         </div>
         <div className="brain-head-actions">
-          <Chip tone="violet" icon={Layers3}>FSRS-7R</Chip>
+          <Chip tone="violet" icon={Layers3}>FSRS-7</Chip>
           <Chip tone="green" icon={ShieldCheck}>%{brain.confidence} güven</Chip>
         </div>
       </header>
@@ -245,9 +245,9 @@ export default function Brain() {
           <div className="model-disclaimer">
             <ShieldCheck size={15} />
             <p>
-              Bu model tıbbi bir teşhis değil. FSRS-7R, FSRS-5 tabanlı bir zamanlayıcıya
-              7 günlük recency katmanı ekleyen bir uyarlamadır; buradaki sayılar yalnızca
-              öğrenme davranışından türetilir.
+              Bu model tıbbi bir teşhis değil. FSRS-7, çift kararlılık (stability) ve zorluk
+              durumunu güncelleyen açık hafıza modelidir; 7 günlük recency katmanı yalnızca
+              hedef hatırlamayı ve kararlılık kazancını dar bir aralıkta kalibre eder.
             </p>
           </div>
         </section>

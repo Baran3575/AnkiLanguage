@@ -36,7 +36,7 @@ function ReviewHero({ data, onStart }) {
         <h1>{due > 0 ? `${due} kelime, tam doğru zamanda.` : 'Bugünlük tekrar yok.'}</h1>
         <p>
           {due > 0
-            ? 'FSRS-7R bu kelimeleri hatırlama eğrinin tam kırıldığı yerde önüne getirdi. Kısa bir oturum yeter.'
+            ? 'FSRS-7 bu kelimeleri hatırlama eğrisinin tam kırıldığı yerde önüne getirdi. Kısa bir oturum yeter.'
             : 'Beynin bugünkü tekrarları tamam. Yeni bir blok açabilir veya yarının dalgasını görebilirsin.'}
         </p>
         <div className="review-hero-actions">
@@ -207,7 +207,7 @@ export function Review() {
     <div className="page review-page">
       <header className="page-head review-head">
         <div>
-          <span className="page-kicker">FSRS-7R · Recency</span>
+          <span className="page-kicker">FSRS-7 · Recency</span>
           <h1>Tekrar<span className="head-dot">.</span></h1>
           <p>Hatırlamanın tam sınırında. Ne erken ne geç.</p>
         </div>
@@ -341,7 +341,7 @@ function SessionDone({ count, seconds, onDone, onReview }) {
       <div className="session-done-mark"><Check size={38} strokeWidth={3} /></div>
       <span className="summary-eyebrow">Tekrar tamam</span>
       <h1>Hafızan tazelendi.</h1>
-      <p>FSRS-7R her kart için yeni bir buluşma planladı. Bir sonraki tekrar, tam unutmaya başladığın anda.</p>
+      <p>FSRS-7 her kart için yeni bir buluşma planladı. Bir sonraki tekrar, tam unutmaya başladığın anda.</p>
       <div className="session-done-stats">
         <div><strong>{count}</strong><span>kart</span></div>
         <div><strong>{Math.max(1, Math.round(seconds / 60))}</strong><span>dakika</span></div>
@@ -487,7 +487,7 @@ export function ReviewSession() {
         <SessionTop index={index} total={words.length} onExit={() => navigate('/review')} />
         <div className="review-session-body" ref={cardRef}>
           <div className="session-kicker">
-            <span><Brain size={15} /> FSRS-7R tekrarı</span>
+            <span><Brain size={15} /> FSRS-7 tekrarı</span>
             <span>{word?.state === 'mastered' ? 'ustalık kartı' : 'aktif hatırlama'}</span>
           </div>
           <AnimatePresence mode="wait">

@@ -6,10 +6,10 @@
   flex-direction: column;
   min-height: 100dvh;
   overflow: hidden;
-  padding-top: env(safe-area-inset-top, 0px);
+  padding-top: var(--safe-top);
   background:
-    radial-gradient(circle at 74% 26%, rgba(91, 118, 255, 0.38), transparent 34%),
-    linear-gradient(155deg, #2239df 0%, #1b2fc6 52%, #172ab7 100%);
+    radial-gradient(circle at 74% 26%, rgba(26, 86, 219, 0.5), transparent 34%),
+    linear-gradient(155deg, #0b1118 0%, #102b61 52%, #123fa8 100%);
   color: #fff;
 }
 
@@ -38,7 +38,7 @@
   right: -4vw;
   width: 48vw;
   height: 48vw;
-  border-color: rgba(217, 242, 107, 0.16);
+  border-color: rgba(219, 231, 255, 0.16);
 }
 
 .welcome-orbit {
@@ -62,7 +62,7 @@
 
 .welcome-orbit::after {
   inset: 34%;
-  border-color: rgba(217, 242, 107, 0.13);
+  border-color: rgba(219, 231, 255, 0.13);
 }
 
 .welcome-header {
@@ -157,7 +157,7 @@
   height: 6px;
   border-radius: 50%;
   background: var(--lime);
-  box-shadow: 0 0 0 3px rgba(217, 242, 107, 0.13);
+  box-shadow: 0 0 0 3px rgba(219, 231, 255, 0.13);
 }
 
 .welcome h1 {
@@ -335,7 +335,7 @@
   padding: 14px 15px 10px;
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: #f5f4ed;
+  background: var(--surface);
   color: var(--blue);
 }
 
@@ -393,7 +393,7 @@
   padding: 13px 15px 12px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 17px;
-  background: #fffdf7;
+  background: var(--surface);
   color: var(--ink);
   box-shadow: 0 20px 44px -24px rgba(7, 13, 76, 0.65);
   will-change: transform;
@@ -483,7 +483,7 @@
   top: 23px;
   right: 4%;
   padding: 8px 12px;
-  color: #ff9b80;
+  color: #8fb4ff;
   font-size: 10px;
 }
 
@@ -504,8 +504,8 @@
   align-items: flex-start;
   gap: 1px;
   padding: 8px 12px;
-  background: rgba(217, 242, 107, 0.12);
-  border-color: rgba(217, 242, 107, 0.22);
+  background: rgba(219, 231, 255, 0.12);
+  border-color: rgba(219, 231, 255, 0.22);
 }
 
 .fsrs-pill span {
@@ -538,7 +538,7 @@
 }
 
 .welcome-stamp svg {
-  color: rgba(217, 242, 107, 0.45);
+  color: rgba(219, 231, 255, 0.45);
 }
 
 .welcome-footer {

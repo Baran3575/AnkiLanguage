@@ -46,9 +46,7 @@ function RoutedApp() {
   useEffect(() => {
     const key = route.name === 'review-session' ? 'reviewSession' : route.name;
     document.title = `${TITLES[key] || 'wort'} · wort.`;
-    if (!['lesson', 'review-session', 'path'].includes(route.name)) {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, [route.name]);
 
   if (loading && !bootstrap) return <BootSplash />;

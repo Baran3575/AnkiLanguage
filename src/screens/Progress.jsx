@@ -55,9 +55,9 @@ function VocabPanel({ data }) {
           Görülenlerin <strong>%{data.vocab.masteryPct}</strong>’i kalıcı ustalıkta.
         </p>
         <ChartLegend items={[
-          { label: 'Öğrenme', color: '#EAAF32' },
-          { label: 'Tekrar', color: '#2F4BF0' },
-          { label: 'Ustalık', color: '#257A5A' },
+          { label: 'Öğrenme', color: '#8a96a5' },
+          { label: 'Tekrar', color: '#1a56db' },
+          { label: 'Ustalık', color: '#0b1118' },
         ]} />
       </div>
       <VocabChart series={series} height={250} />
@@ -285,7 +285,7 @@ export default function Progress() {
 
       <footer className="progress-footer">
         <span><i className="live-dot" /> {data.totals.wordsPerActiveDay} yeni kelime / aktif gün</span>
-        <span>FSRS-7R · brain-v1</span>
+        <span>FSRS-7 · brain-v1</span>
         <span>{formatMinutes(data.totals.minutes)} toplam pratik</span>
       </footer>
     </div>

@@ -51,7 +51,7 @@
 
 .kpi-blue .kpi-icon { background: var(--blue-soft); color: var(--blue); }
 .kpi-green .kpi-icon { background: var(--moss-soft); color: var(--moss); }
-.kpi-amber .kpi-icon { background: var(--amber-soft); color: #a06a08; }
+.kpi-amber .kpi-icon { background: var(--amber-soft); color: var(--blue-deep); }
 .kpi-coral .kpi-icon { background: var(--coral-soft); color: var(--coral); }
 .kpi-violet .kpi-icon { background: var(--violet-soft); color: var(--violet); }
 
