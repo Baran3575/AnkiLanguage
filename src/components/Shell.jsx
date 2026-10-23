@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
-  Home, Route, Layers3, ChartSpline, BrainCircuit, Settings2, Flame, ChevronRight, X, CheckCircle2, AlertCircle,
+  Home, Route, Layers3, ChartSpline, BrainCircuit, Settings2, Flame, Zap, ChevronRight, X, CheckCircle2, AlertCircle,
 } from 'lucide-react';
 import { useApp } from '../lib/store.jsx';
 import { navigate, useRoute } from '../lib/router.js';
@@ -106,7 +106,10 @@ function MobileBar({ active, due }) {
         <span className="mobile-context">TR <b>→</b> DE <i>A1</i></span>
         <div className="mobile-topbar-actions">
           <button type="button" className="mobile-streak" onClick={() => navigate('/progress')} aria-label={`${user?.streak || 0} günlük seri`}>
-            <Flame size={15} /> <strong>{user?.streak || 0}</strong>
+            <Flame size={16} /> <strong>{user?.streak || 0}</strong>
+          </button>
+          <button type="button" className="mobile-streak mobile-xp" onClick={() => navigate('/progress')} aria-label={`${user?.xp || 0} XP`}>
+            <Zap size={16} /> <strong>{user?.xp || 0}</strong>
           </button>
           <button type="button" className="mobile-avatar" onClick={() => setSettingsOpen(true)} aria-label="Profil ve ayarlar">
             {(user?.name || 'W').slice(0, 1).toLocaleUpperCase('tr-TR')}
