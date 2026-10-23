@@ -47,7 +47,7 @@ Uygulama iki modda çalışır:
 - **FSRS-7 · Recency** · 34 parametreli çift-stabilite modeli; uzun vadeli `stability`, kısa vadeli `stability_short` ve `difficulty` birlikte güncellenir.
 - **Güvenilir Almanca ses** · Android'de yerel `TextToSpeech` motoru, Google Almanca ses paketleri arasında deterministik kalite sıralaması ve web için `speechSynthesis` yedeği.
 - **Edge-to-edge Android** · Android 17 / API 37 hedefi, Android 9 / API 28 desteği, `EdgeToEdge.enable()` ve `SystemBars` CSS güvenli alanları.
-- **Yeni görsel sistem** · Duolingo esintili, oyunlaştırılmış arayüz: Feather/Baloo tarzı yuvarlak tipografi, 3D butonlar, yeşil aksan, yol baloncukları, ilerleme çubukları ve yalnızca gerçek durum verileri.
+- **Yeni görsel sistem** · Modern minimal SaaS: Inter Variable tipografi, temiz yüzeyler, mavi aksan, ince kenarlıklar, yumuşak gölgeler ve yalnızca mavi, siyah, beyaz ve gri tonları.
 - **Doğrulanmış A1 içeriği** · 12 ünite, 48 blok, 224 kelime; dil bilgisi notları ve örnek cümleler gözden geçirildi.
 
 ## Özellikler
